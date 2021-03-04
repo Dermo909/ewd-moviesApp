@@ -5,6 +5,7 @@ import FilterMoviesCard from "../src/components/filterMoviesCard";
 import MoviesHeader from "../src/components/headerMovieList";
 import MovieDetails from "../src/components/movieDetails";
 import MovieHeader from '../src/components/headerMovie'
+import MoviePage from './pages/movieDetailsPage'
 
 const sample = {
   adult: false,
