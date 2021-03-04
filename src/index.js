@@ -1,10 +1,6 @@
 import React from "react";
-import { storiesOf } from "@storybook/react";
-import MovieCard from "../src/components/movieCard";
-import FilterMoviesCard from "../src/components/filterMoviesCard";
-import MoviesHeader from "../src/components/headerMovieList";
-import MovieDetails from "../src/components/movieDetails";
-import MovieHeader from '../src/components/headerMovie'
+import ReactDOM from "react-dom";
+import HomePage from "./pages/homePage";
 
 const sample = {
   adult: false,
@@ -89,31 +85,10 @@ const sample = {
 
 const movies = [sample, sample, sample, sample, sample, sample, sample];
 
-storiesOf("Home Page/MovieCard", module)
-  .add("default", () => <MovieCard movie={sample} />)
-  .add("exception", () => {
-    const sampleNoPoster = { ...sample, poster_path: undefined };
-    return <MovieCard movie={sampleNoPoster} />;
-  });
+const App = () => {
+  return (
+      <HomePage movies={movies} />
+  );
+};
 
-storiesOf("Home Page/MovieCard", module)
-  .add("default", () => <MovieCard movie={sample} />)
-  .add("exception", () => {
-    const sampleNoPoster = { ...sample, poster_path: undefined };
-    return <MovieCard movie={sampleNoPoster} />;
-  });
-
-storiesOf("Home Page/FilterMoviesCard", module)
-  .add("default", () => <FilterMoviesCard />)
-
-storiesOf("Home Page/Header", module).add("default", () => (
-  <MoviesHeader title="Discover Movies" />
-));
-
-storiesOf("Movie Details Page/MovieDetails", module).add("default", () => (
-  <MovieDetails movie={sample} />
-));
-
-storiesOf("Movie Details Page/MovieHeader", module).add("default", () => (
-  <MovieHeader movie={sample} />
-));
+ReactDOM.render(<App />, document.getElementById("root"));
