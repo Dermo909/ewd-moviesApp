@@ -56,7 +56,7 @@ export const getUpcomingMovies = () => {
     .then(json => json.results);
 };
 
-export const getGBFilmCertification = (id) => {
+export const getFilmCertification = (id) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}/release_dates?api_key=${process.env.REACT_APP_TMDB_KEY}`
   )
@@ -64,14 +64,10 @@ export const getGBFilmCertification = (id) => {
       return response.json() 
     })
     .then((response) => {
-      const filteredCerts = response.results.filter(x => x.iso_3166_1 === 'GB');
+      console.log(response.results);
 
-      if (filteredCerts.length > 0) {
-        if (filteredCerts[0].release_dates.length > 0) {
-          return filteredCerts[0].release_dates[0].certification;
-        } else {
-          return '';
-        }
+      if (response.results.length > 0) {
+          return response.results[0].release_dates[0].certification;
       } else {
         return '';
       }
