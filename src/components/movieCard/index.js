@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import Avatar from "@material-ui/core/Avatar";
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -35,6 +36,10 @@ export default function MovieCard({ movie, action }) {
           movie.favorite ? (
             <Avatar className={classes.avatar}>
               <FavoriteIcon />
+            </Avatar>
+          ) : movie.playlist ? (
+            <Avatar className={classes.avatar}>
+              <PlaylistAddCheckIcon />
             </Avatar>
           ) : null
         }

@@ -19,7 +19,7 @@ const reducer = (state, action) => {
       };
     case "add-to-playlist":
       return {
-        movies: state.movies.map((m) =>
+        upcoming: state.upcoming.map((m) =>
           m.id === action.payload.movie.id ? { ...m, playlist: true } : m
         ),
       };
@@ -58,8 +58,9 @@ const MoviesContextProvider = (props) => {
   };
 
   const addToPlaylist = (movieId) => {
-    const index = state.movies.map((m) => m.id).indexOf(movieId);
-    dispatch({ type: "add-to-playlist", payload: { movie: state.movies[index] } });
+    const index = state.upcoming.map((m) => m.id).indexOf(movieId);
+    console.log('addToPlaylist() index', index);
+    dispatch({ type: "add-to-playlist", payload: { movie: state.upcoming[index] } });
   };
 
   const removeFromFavorites = (movieId) => {
