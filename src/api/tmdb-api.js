@@ -66,8 +66,12 @@ export const getFilmCertification = (id) => {
     .then((response) => {
       console.log(response.results);
 
-      if (response.results.length > 0) {
+      if (response.results !== undefined) {
+        if (response.results.length > 0) {
           return response.results[0].release_dates[0].certification;
+        } else {
+          return '';
+        }
       } else {
         return '';
       }
