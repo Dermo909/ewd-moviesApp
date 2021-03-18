@@ -1,11 +1,18 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import MovieCard from "../src/components/movieCard";
-import FilterMoviesCard from "../src/components/filterMoviesCard";
+import FilterMoviesCard from "../src/components//filterMoviesCard";
 import MoviesHeader from "../src/components/headerMovieList";
-import MovieDetails from "../src/components/movieDetails";
-import MovieHeader from '../src/components/headerMovie'
-import MoviePage from "../src/pages/movieDetailsPage"
+import MovieList from "../src/components/movieList";
+import MovieDetails from "../src/components/movieDetails/";
+import MovieHeader from "../src/components/headerMovie/";
+import SiteHeader from '../src/components/siteHeader'
+import Grid from "@material-ui/core/Grid";
+import { MemoryRouter } from "react-router";
+import GenresContextProvider from "../src/contexts/genresContexts";
+import { action } from "@storybook/addon-actions";
+import IconButton from "@material-ui/core/IconButton";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const sample = {
   adult: false,
@@ -67,12 +74,8 @@ const sample = {
   ],
   production_countries: [
     {
-      iso_3166_1: "FR",
-      name: "France",
-    },
-    {
-      iso_3166_1: "LI",
-      name: "Lithuania",
+      iso_3166_1: "US",
+      name: "United States of America",
     },
   ],
   release_date: "2017-12-13",
@@ -92,33 +95,90 @@ const sample = {
   vote_count: 9692,
 };
 
-const movies = [sample, sample, sample, sample, sample, sample, sample];
-
 storiesOf("Home Page/MovieCard", module)
-  .add("default", () => <MovieCard movie={sample} />)
+  .addDecorator((story) => (
+    <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .add("default", () => (
+    <MovieCard
+      movie={sample}
+      action={(movie) => (
+        <button className="btn w-100 btn-primary">Test</button>
+      )}
+    />
+  ))
   .add("exception", () => {
     const sampleNoPoster = { ...sample, poster_path: undefined };
-    return <MovieCard movie={sampleNoPoster} />;
-  });
-
-storiesOf("Home Page/MovieCard", module)
-  .add("default", () => <MovieCard movie={sample} />)
-  .add("exception", () => {
-    const sampleNoPoster = { ...sample, poster_path: undefined };
-    return <MovieCard movie={sampleNoPoster} />;
+    return (
+      <MovieCard
+        movie={sampleNoPoster}
+        action={(movie) => (
+          <button className="btn w-100 btn-primary">Test</button>
+        )}
+      />
+    );
   });
 
 storiesOf("Home Page/FilterMoviesCard", module)
-  .add("default", () => <FilterMoviesCard />)
+  .addDecorator((story) => (
+    <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .addDecorator((story) => (
+    <GenresContextProvider>{story()}</GenresContextProvider>
+  ))
+  .add("default", () => (
+    <FilterMoviesCard onUserInput={action("filter input")} />
+  ));
 
-storiesOf("Home Page/Header", module).add("default", () => (
-  <MoviesHeader title="Discover Movies" />
-));
+storiesOf("Home Page/Header", module)
+  .addDecorator((story) => (
+    <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .add("default", () => <MoviesHeader title="Discover Movies" />);
+
+storiesOf("Home Page/MovieList", module)
+  .addDecorator((story) => (
+    <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .add("default", () => {
+    const movies = [
+      { ...sample, id: 1 },
+      { ...sample, id: 2 },
+      { ...sample, id: 3 },
+      { ...sample, id: 4 },
+      { ...sample, id: 5 },
+    ];
+    return (
+      <Grid container spacing={5}>
+        <MovieList
+          movies={movies}
+          action={(movie) => (
+            <IconButton
+              aria-label="add to favorites"
+              onClick={action("Perform Action")}
+            >
+              <FavoriteIcon color="primary" fontSize="large" />
+            </IconButton>
+            // <button className="btn w-100 btn-primary">Test</button>
+          )}
+        />
+      </Grid>
+    );
+  });
 
 storiesOf("Movie Details Page/MovieDetails", module).add("default", () => (
   <MovieDetails movie={sample} />
 ));
 
-storiesOf("Movie Details Page/MovieHeader", module).add("default", () => (
-  <MovieHeader movie={sample} />
-));
+storiesOf("Movie Details Page/MovieHeader", module)
+  .addDecorator((story) => (
+    <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+  ))
+  .add("default", () => <MovieHeader movie={sample} />);
+
+
+storiesOf("App Header", module)
+.addDecorator((story) => (
+  <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>
+))
+.add("default", () => <SiteHeader />);
