@@ -6,7 +6,7 @@ import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 const HomePage = (props) => {
   const context = useContext(MoviesContext);
   const { movies  } = context;
-
+  //console.log(context);
   return (
     <PageTemplate
       title="Discover Movies"

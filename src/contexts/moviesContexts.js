@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,14 +19,18 @@ const reducer = (state, action) => {
       return {
         movies: action.payload.movies,
       };
-      case "add-review":
-        return {
-          movies: state.movies.map((m) =>
-            m.id === action.payload.movie.id
-              ? { ...m, review: action.payload.review }
-              : m
-          )
-        };
+    case "load-upcoming-movies":
+      return {
+        upcomingMovies: action.payload.upcomingMovies,
+      };
+    case "add-review":
+      return {
+        movies: state.movies.map((m) =>
+          m.id === action.payload.movie.id
+            ? { ...m, review: action.payload.review }
+            : m
+        )
+      };
     default:
       return state;
   }
@@ -58,13 +62,22 @@ const MoviesContextProvider = (props) => {
     getMovies().then((movies) => {
       dispatch({ type: "load-discover-movies", payload: { movies } });
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // useEffect(() => {
+  //   getUpcomingMovies().then((movies) => {
+  //     dispatch({ type: "load-upcoming-movies", payload: { movies } });
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <MoviesContext.Provider
       value={{
         movies: state.movies,
+        upcomingMovies: state.upcomingMovies,
         addToFavorites: addToFavorites,
         removeFromFavorites: removeFromFavorites,
         addReview: addReview,
