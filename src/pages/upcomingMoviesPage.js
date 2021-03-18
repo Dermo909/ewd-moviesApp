@@ -5,19 +5,13 @@ import AddToPlaylistIcon from '../components/cardIcons/addToPlaylist';
 import { getUpcomingMovies} from '../api/tmdb-api';
 
 const UpcomingMoviesPage = (props) => {
-
   const context = useContext(MoviesContext);
-  const [movies, setMovies] = useState([]);
-  useEffect(() => {
-    getUpcomingMovies().then(movies => {
-      setMovies(movies);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { upcoming } = context;
+
   return (
     <PageTemplate
       title="Upcoming Movies"
-      movies={movies}
+      movies={upcoming}
       action={(movie) => {
         return <AddToPlaylistIcon movie={movie} />
       }}
