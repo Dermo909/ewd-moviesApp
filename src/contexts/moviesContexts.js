@@ -15,6 +15,15 @@ const MoviesContextProvider = (props) => {
     });
   };
 
+  const removeFromFavorites = (movieId) => {
+    setMovies((movies) => {
+      const updatedMovies = movies.map((m) =>
+        m.id === movieId ? { ...m, favorite: false } : m
+      );
+      return updatedMovies;
+    });
+  };
+
   useEffect(() => {
     getMovies().then((movies) => {
       setMovies(movies);
@@ -27,6 +36,7 @@ const MoviesContextProvider = (props) => {
       value={{
         movies: movies,
         addToFavorites: addToFavorites,
+        removeFromFavorites: removeFromFavorites,
       }}
     >
       {props.children}

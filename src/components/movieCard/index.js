@@ -24,16 +24,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard(props) {
+export default function MovieCard({ movie, action }) {
   const classes = useStyles();
-  const movie = props.movie;
-
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    props.selectFavorite(movie.id);
-  };
-
   return (
+
     <Card className={classes.card}>
       <CardHeader
         className={classes.header}
@@ -75,13 +69,12 @@ export default function MovieCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
+        {action(movie)}
+
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
-        </Button>
+          </Button>
         </Link>
       </CardActions>
     </Card>
