@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import PageTemplate from '../components/templateMovieListPage'
 import { MoviesContext } from "../contexts/moviesContexts";
 import AddToPlaylistIcon from '../components/cardIcons/addToPlaylist';
-import { getUpcomingMovies} from '../api/tmdb-api';
 
 const UpcomingMoviesPage = (props) => {
   const context = useContext(MoviesContext);

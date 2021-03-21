@@ -1,8 +1,6 @@
-import { DataUsageRounded } from "@material-ui/icons";
-
 export const getMovies = () => {
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&include_adult=false&page=1`
   )
     .then(res => res.json())
     .then(json => json.results);
@@ -32,7 +30,7 @@ export const getGenres = () => {
   return fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
     process.env.REACT_APP_TMDB_KEY +
-    "&language=en-US"
+    "&language=en-GB"
   )
     .then(res => res.json())
     .then(json => json.genres);
@@ -50,7 +48,7 @@ export const getMovieReviews = (id) => {
 
 export const getUpcomingMovies = () => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-UGB&include_adult=false&page=1`
   )
     .then(res => res.json())
     .then(json => json.results);
@@ -76,4 +74,12 @@ export const getFilmCertification = (id) => {
         return '';
       }
     });
+};
+
+export const getTop100Movies = () => {
+  return fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&page=1`
+  )
+    .then(res => res.json())
+    .then(json => {console.log('Top 100 movies from api:', json.results); return json.results});
 };
