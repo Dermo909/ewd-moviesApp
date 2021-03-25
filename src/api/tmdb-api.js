@@ -1,3 +1,5 @@
+import { MovieCreation } from "@material-ui/icons";
+
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&include_adult=false&page=1`
@@ -11,8 +13,13 @@ export const getMovie = id => {
     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
   ).then(res => res.json())
    .then(data => {
-    //  data.certification = getGBFilmCertification(id);
-    //  console.log(data);
+     console.log(data);
+     // Add release year member
+     data.releaseYear = data.release_date.substring(0, 4);
+     // Format runtime
+     const hours = Math.floor(data.runtime / 60);
+     const minutes = data.runtime % 60;
+     data.runtime = hours + 'h' + minutes + 'm';
      return data;
    })
 };
@@ -62,24 +69,34 @@ export const getFilmCertification = (id) => {
       return response.json() 
     })
     .then((response) => {
-      console.log(response.results);
-
       if (response.results !== undefined) {
         if (response.results.length > 0) {
-          return response.results[0].release_dates[0].certification;
+          // Get the first certification in the response
+          let i = 0;
+          while(i != response.results.length) {
+            if (response.results[i].release_dates[0].certification.length > 0) {
+              return response.results[i].release_dates[0].certification;
+            }
+            i++;
+          }
+          return 'Not Rated';
         } else {
-          return '';
+          return 'Not Rated';
         }
       } else {
-        return '';
+        return 'Not Rated';
       }
     });
 };
 
 export const getTop100Movies = () => {
   return fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&page=1`
-  )
-    .then(res => res.json())
-    .then(json => {console.log('Top 100 movies from api:', json.results); return json.results});
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&page=1`
+)
+  .then(res => res.json())
+  .then(json => {
+    return json.results;
+  });
 };
+
+

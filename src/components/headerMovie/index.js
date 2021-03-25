@@ -16,8 +16,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5),
     margin: 0,
   },
-  tagLine: {
+  // tagLine: {
+  //   fontSize: "1.5rem",
+  // },
+  movieDetails: {
+    fontSize: "1rem",
+  },
+  movieHeader_Name: {
+    fontSize: "2.5rem",
+    fontWeight: "fontWeightBold",
+  },
+  movieHeader_Year: {
     fontSize: "1.5rem",
+    color: "grey"
   },
 }));
 
@@ -26,21 +37,22 @@ const MovieHeader = ( { movie, history}) => {
 
   return (
     <Paper component="div" className={classes.root}>
-      <IconButton aria-label="go back" onClick={() => history.goBack()} >
+      {/* <IconButton aria-label="go back" onClick={() => history.goBack()} >
         <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
+      </IconButton> */}
 
       <Typography variant="h4" component="h3">
-        {movie.title}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary" />
-        </a>
+        <span className={classes.movieHeader_Name}>{movie.title}</span> 
+        <span className={classes.movieHeader_Year}>({movie.releaseYear})</span>
         <br />
-        <span className={classes.tagLine}>{`   "${movie.tagline}"`} </span>
+        <span className={classes.movieDetails}>Rated {movie.certification} ○ {movie.release_date} ○ {movie.runtime}</span>
+        {/*<a href={movie.homepage}></a>
+         <br />
+        <span className={classes.tagLine}>{`   "${movie.tagline}"`} </span> */}
       </Typography>
-      <IconButton aria-label="go forward" onClick={() => history.goForward() } >
+      {/* <IconButton aria-label="go forward" onClick={() => history.goForward() } >
         <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
+      </IconButton> */}
     </Paper>
   );
 };
