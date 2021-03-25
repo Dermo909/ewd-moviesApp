@@ -119,7 +119,7 @@ export const getCastAndCrew = id => {
       filteredData.sortedActors = Object.keys(data.cast).sort(function(a,b){
                           return data.cast[a.popularity]-data.cast[b.popularity]
                           }).map(key => data.cast[key]);
-
+                          console.log(filteredData.sortedActors);
       return filteredData;
     })
 };

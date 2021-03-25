@@ -43,10 +43,16 @@ const useStyles = makeStyles((theme) => ({
   },
   crewName: {
     flexBasis: "33%",
-    maxWidth: "33%"
+    maxWidth: "33%",
+    color: "grey"
   },
   container: {
     display: "flex"
+  },
+  actorName: {
+    fontSize: "1rem",
+    flexBasis: "33%",
+    maxWidth: "33%",
   }
 }));
 
@@ -57,6 +63,9 @@ const MovieDetails = ({ movie }) => {
   const toggleDrawer = (open) => {
     return () => setDrawerOpen(open);
   };
+
+  // Just show 8 actors
+  const actors = movie.castAndCrew.sortedActors.splice(8);
 
   return (
     <div>
@@ -73,17 +82,15 @@ const MovieDetails = ({ movie }) => {
         </div>
         <br />
 
-          <div className={classes.container}>
-          <div className={classes.crewTitle}>Director<br />{movie.castAndCrew.director.name}</div>
-          <div className={classes.crewTitle}>Producer <br />{movie.castAndCrew.producer.name}</div>
-          <div className={classes.crewTitle}>Writer <br />{movie.castAndCrew.writer.name}</div>
-          </div>
-        
-        {/* <Box flexDirection="row">
-        <Box component="div" display="flex" flexDirection="column">Director {movie.castAndCrew.director.name}</Box>
-        <Box component="div" display="flex" flexDirection="column">Producer {movie.castAndCrew.producer.name}</Box>
-        <Box component="div" display="flex" flexDirection="column">Writer {movie.castAndCrew.writer.name}</Box>
-        </Box> */}
+        <div className={classes.container}>
+          <div className={classes.crewTitle}>Director<br /><span className={classes.crewName}>{movie.castAndCrew.director.name}</span></div>
+          <div className={classes.crewTitle}>Producer <br /><span className={classes.crewName}>{movie.castAndCrew.producer.name}</span></div>
+          <div className={classes.crewTitle}>Writer <br /><span className={classes.crewName}>{movie.castAndCrew.writer.name}</span></div>
+        </div>
+        <br />
+        <div className={classes.container}>
+        {movie.castAndCrew.sortedActors.map((a) => ( <Paper key={a.original_name} className={classes.actorName}>{a.original_name}</Paper>))}
+        </div>
       </Typography>
         
 
