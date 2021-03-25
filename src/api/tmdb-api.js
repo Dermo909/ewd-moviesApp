@@ -20,6 +20,8 @@ export const getMovie = id => {
      const hours = Math.floor(data.runtime / 60);
      const minutes = data.runtime % 60;
      data.runtime = hours + 'h' + minutes + 'm';
+     // format user score
+     data.vote_average = data.vote_average * 10 + '%';
      return data;
    })
 };

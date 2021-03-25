@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
+import { NoEncryption } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  genreList: {
+    display: "inline"
+  },
 }));
 
 const MovieDetails = ({ movie }) => {
@@ -40,48 +44,16 @@ const MovieDetails = ({ movie }) => {
   };
 
   return (
-    <>
-      <Typography variant="h5" component="h3">
-        Overview
-      </Typography>
-
+    <><Paper component="ul" className={classes.root}>
       <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
-
-      <Paper component="ul" className={classes.root}>
-        <li>
-          <Chip label="Genres" className={classes.chip} color="primary" />
-        </li>
+        <Chip icon={<StarRate />} label={`${movie.vote_average}`} />
         {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} className={classes.chip} />
-          </li>
+          <Chip label={g.name} className={classes.chip} />
         ))}
-      </Paper>
-      <Paper component="ul" className={classes.root}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count}`}
-        />
-        <Chip label={`Released: ${movie.release_date}`} />
-        <Chip label={`${movie.certification}`} />
-      </Paper>
-
-      <Paper component="ul" className={classes.root}>
-        <li>
-          <Chip label="Production Countries" className={classes.chip} color="primary" />
-        </li>
-        {movie.production_countries.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} className={classes.chip} />
-          </li>
-        ))}
+        <br />
+        {movie.overview}
+        <br />
+      </Typography>
       </Paper>
 
       <Fab
