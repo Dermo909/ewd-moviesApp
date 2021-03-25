@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
 import { NoEncryption } from "@material-ui/icons";
-
+import Box from '@material-ui/core/Box';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -33,6 +33,21 @@ const useStyles = makeStyles((theme) => ({
   genreList: {
     display: "inline"
   },
+  tagline: {
+    fontStyle: "oblique"
+  },
+  crewTitle: {
+    fontWeight: "fontWeightBold",
+    flexBasis: "33%",
+    maxWidth: "33%"
+  },
+  crewName: {
+    flexBasis: "33%",
+    maxWidth: "33%"
+  },
+  container: {
+    display: "flex"
+  }
 }));
 
 const MovieDetails = ({ movie }) => {
@@ -44,17 +59,33 @@ const MovieDetails = ({ movie }) => {
   };
 
   return (
-    <><Paper component="ul" className={classes.root}>
-      <Typography variant="h6" component="p">
+    <div>
+      <Typography variant="h6" component="span">
         <Chip icon={<StarRate />} label={`${movie.vote_average}`} />
         {movie.genres.map((g) => (
-          <Chip label={g.name} className={classes.chip} />
+          <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
+        <div className={classes.tagline}>
+          {movie.tagline}
+        </div>
+        <div>
+          {movie.overview}
+        </div>
         <br />
-        {movie.overview}
-        <br />
+
+          <div className={classes.container}>
+          <div className={classes.crewTitle}>Director<br />{movie.castAndCrew.director.name}</div>
+          <div className={classes.crewTitle}>Producer <br />{movie.castAndCrew.producer.name}</div>
+          <div className={classes.crewTitle}>Writer <br />{movie.castAndCrew.writer.name}</div>
+          </div>
+        
+        {/* <Box flexDirection="row">
+        <Box component="div" display="flex" flexDirection="column">Director {movie.castAndCrew.director.name}</Box>
+        <Box component="div" display="flex" flexDirection="column">Producer {movie.castAndCrew.producer.name}</Box>
+        <Box component="div" display="flex" flexDirection="column">Writer {movie.castAndCrew.writer.name}</Box>
+        </Box> */}
       </Typography>
-      </Paper>
+        
 
       <Fab
         color="secondary"
@@ -68,7 +99,7 @@ const MovieDetails = ({ movie }) => {
       <Drawer anchor="top" open={drawerOpen} onClose={toggleDrawer(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-    </>
+    </div>
   );
 };
 
