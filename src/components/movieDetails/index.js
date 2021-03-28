@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
-import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import MonetizationIcon from "@material-ui/icons/MonetizationOn";
 import StarRate from "@material-ui/icons/StarRate";
 import NavigationIcon from "@material-ui/icons/Navigation";
 import Fab from "@material-ui/core/Fab";
@@ -11,8 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
-import { NoEncryption } from "@material-ui/icons";
-import Box from '@material-ui/core/Box';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -47,12 +44,26 @@ const useStyles = makeStyles((theme) => ({
     color: "grey"
   },
   container: {
-    display: "flex"
+    display: "flex",
+    maxWidth: "100%"
   },
-  actorName: {
-    fontSize: "1rem",
+  actorDetails: {
     flexBasis: "33%",
     maxWidth: "33%",
+    padding: "5px",
+    margin: "10px",
+    fontSize: "1rem",
+  },
+  actorName: {
+    fontWeight: "fontWeightBold",
+  },
+  characterName: {
+    fontSize: ".75rem",
+    color: "grey",
+  },
+  imgSize: {
+    height: "75px",
+    borderRadius: "16px"
   }
 }));
 
@@ -89,10 +100,14 @@ const MovieDetails = ({ movie }) => {
         </div>
         <br />
         <div className={classes.container}>
-        {movie.castAndCrew.sortedActors.map((a) => ( <Paper key={a.original_name} className={classes.actorName}>{a.original_name}</Paper>))}
+        {movie.castAndCrew.sortedActors.map((a) => ( 
+          <Paper key={a.original_name} className={classes.actorDetails}>
+            <img classes={classes.imgSize} src={`https://image.tmdb.org/t/p/w92/${a.profile_path}`} alt={a.profile_path} />
+            <span classes={classes.actorName}>{a.original_name}</span><br />
+            <span classes={classes.characterName}>{a.character}</span>
+          </Paper>))}
         </div>
       </Typography>
-        
 
       <Fab
         color="secondary"

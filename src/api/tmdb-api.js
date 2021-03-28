@@ -1,5 +1,3 @@
-import { MovieCreation } from "@material-ui/icons";
-
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&include_adult=false&page=1`
@@ -75,7 +73,7 @@ export const getFilmCertification = (id) => {
         if (response.results.length > 0) {
           // Get the first certification in the response
           let i = 0;
-          while(i != response.results.length) {
+          while(i !== response.results.length) {
             if (response.results[i].release_dates[0].certification.length > 0) {
               return response.results[i].release_dates[0].certification;
             }
@@ -110,9 +108,9 @@ export const getCastAndCrew = id => {
       const filteredData = [];
       // Get some details
       // There might be more than one of each but we're only interested in one
-      filteredData.director = data.crew.filter(x => x.known_for_department == 'Directing')[0];
-      filteredData.writer = data.crew.filter(x => x.known_for_department == 'Writing')[0];
-      filteredData.producer = data.crew.filter(x => x.known_for_department == 'Production')[0];
+      filteredData.director = data.crew.filter(x => x.known_for_department === 'Directing')[0];
+      filteredData.writer = data.crew.filter(x => x.known_for_department === 'Writing')[0];
+      filteredData.producer = data.crew.filter(x => x.known_for_department === 'Production')[0];
 
       // Order the actors by popularity 
       // Front end will decide how many to show
