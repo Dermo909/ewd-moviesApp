@@ -33,6 +33,15 @@ export const getMovieImages = id => {
     });
 };
 
+export const getMovieBackdrop = id => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  ).then(res => res.json())
+    .then(json => {
+      return json.backdrops[0];
+    });
+};
+
 export const getGenres = () => {
   return fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +

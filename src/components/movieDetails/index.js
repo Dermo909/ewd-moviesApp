@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,11 +81,15 @@ const MovieDetails = ({ movie }) => {
 
   return (
     <div>
+      <Box bgcolor="primary.main" style={{backgroundImage:'url($(https://image.tmdb.org/t/p/w1280/iopYFB1b6Bh7FWZh3onQhph1sih.jpg}))'}}>
       <Typography variant="h6" component="span">
         <Chip icon={<StarRate />} label={`${movie.vote_average}`} />
         {movie.genres.map((g) => (
           <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
+        <div>
+          Favourite Watchlist
+        </div>
         <div className={classes.tagline}>
           {movie.tagline}
         </div>
@@ -98,6 +103,8 @@ const MovieDetails = ({ movie }) => {
           <div className={classes.crewTitle}>Producer <br /><span className={classes.crewName}>{movie.castAndCrew.producer.name}</span></div>
           <div className={classes.crewTitle}>Writer <br /><span className={classes.crewName}>{movie.castAndCrew.writer.name}</span></div>
         </div>
+       </Typography>
+       </Box>
         <br />
         <div className={classes.container}>
         {movie.castAndCrew.sortedActors.map((a) => ( 
@@ -107,8 +114,10 @@ const MovieDetails = ({ movie }) => {
             <span classes={classes.characterName}>{a.character}</span>
           </Paper>))}
         </div>
-      </Typography>
+      <div>
+      </div>
 
+      <div>
       <Fab
         color="secondary"
         variant="extended"
@@ -121,6 +130,7 @@ const MovieDetails = ({ movie }) => {
       <Drawer anchor="top" open={drawerOpen} onClose={toggleDrawer(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
+      </div>
     </div>
   );
 };
