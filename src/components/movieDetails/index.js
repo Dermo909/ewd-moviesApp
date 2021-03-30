@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   actorDetails: {
     flexBasis: "33%",
     maxWidth: "33%",
-    padding: "5px",
+
     margin: "10px",
     fontSize: "1rem",
   },

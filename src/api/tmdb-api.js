@@ -128,6 +128,10 @@ export const getTop100Movies = () => {
 )
   .then(res => res.json())
   .then(json => {
+    console.log('top 100:', json.results);
+    json.results.forEach(x => {
+      x.vote_average = x.vote_average * 10 + '%';
+    });
     return json.results;
   });
 };
