@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import { getMovieImages } from "../../api/tmdb-api";
-
+import Box from '@material-ui/core/Box';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -23,6 +23,7 @@ const TemplateMoviePage = ({ movie, children }) => {
   const [images, setImages] = useState([]);
   useEffect(() => {
     getMovieImages(movie.id).then((images) => {
+      movie.mainPoster = images.length !== 0 ? images[0].file_path : movie.backdrop_path;
       setImages(images);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,15 +36,15 @@ const TemplateMoviePage = ({ movie, children }) => {
       <Grid container spacing={5} style={{ padding: "15px" }}>
         <Grid item xs={3}>
           <div className={classes.root}>
-            <GridList cellHeight={500} className={classes.gridList} cols={1}>
-              {images.map((image) => (
-                <GridListTile key={image.file_path} className={classes.gridListTile} cols={1}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                    alt={image.poster_path}
+            <GridList cellHeight={900} className={classes.gridList} cols={1}>
+                <GridListTile key={movie.mainPoster} className={classes.gridListTile} cols={1}>
+                  <Box>
+                  <img 
+                    src={`https://image.tmdb.org/t/p/w500/${movie.mainPoster}`}
+                    alt={movie.mainPoster}
                   />
+                  </Box>
                 </GridListTile>
-              ))}
             </GridList>
           </div>
         </Grid>

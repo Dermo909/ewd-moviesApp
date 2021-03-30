@@ -26,7 +26,7 @@ export const getMovie = id => {
 
 export const getMovieImages = id => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en`
   ).then(res => res.json())
     .then(json => {
       return json.posters;
@@ -58,7 +58,31 @@ export const getMovieReviews = (id) => {
   )
     .then((res) => res.json())
     .then((json) => {
+      console.log('Reviews: ', json.results);
       return json.results;
+    });
+};
+
+export const getTopMovieReview = (id) => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.REACT_APP_TMDB_KEY}`
+  )
+    .then((res) => res.json())
+    .then((json) => {
+      const review = json.results[0];
+      console.log('review:', review);
+      // Some avatars are stored on tmdb but others are stored elsewhere
+      // If avatar path has 'http' in it then its elsewhere so we use as is
+      // If not include 'http' then its a filename on tmdb
+      if (review.author_details.avatar_path.includes('http') === false) {
+        review.author_details.avatar_path = `https://image.tmdb.org/t/p/w92${review.author_details.avatar_path}`;
+      } else {
+        // External avatars have '/' at the start
+        review.author_details.avatar_path = review.author_details.avatar_path.substring(1);
+      }
+      review.created_at = new Date(review.created_at).toDateString();
+      review.rating = review.author_details.rating;
+      return review;
     });
 };
 
@@ -121,6 +145,15 @@ export const getCastAndCrew = id => {
       filteredData.writer = data.crew.filter(x => x.known_for_department === 'Writing')[0];
       filteredData.producer = data.crew.filter(x => x.known_for_department === 'Production')[0];
 
+      if (filteredData.director === undefined) {
+        filteredData.director = "<none specified>";
+      }
+      if (filteredData.writer === undefined) {
+        filteredData.writer = "<none specified>";
+      }
+      if (filteredData.producer === undefined) {
+        filteredData.producer = "<none specified>";
+      }
       // Order the actors by popularity 
       // Front end will decide how many to show
       filteredData.sortedActors = Object.keys(data.cast).sort(function(a,b){

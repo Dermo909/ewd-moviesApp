@@ -11,6 +11,10 @@ import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
 import Box from '@material-ui/core/Box';
 
+const theme = {
+  spacing: 8,
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -65,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
   imgSize: {
     height: "75px",
     borderRadius: "16px"
+  },
+  reviewAuthor: {
+    fontWeight: "fontWeightBold"
   }
 }));
 
@@ -78,6 +85,7 @@ const MovieDetails = ({ movie }) => {
 
   // Just show 8 actors
   const actors = movie.castAndCrew.sortedActors.splice(8);
+  console.log('avatar path: ', movie.topReview.author_details.avatar_path);
 
   return (
     <Box>
@@ -118,6 +126,19 @@ const MovieDetails = ({ movie }) => {
           </Paper>))}
         </Box>
       <Box>
+        <Paper>
+          <Box display="flex" flexDirection="row">
+            <Box display="flex" flexDirection="column" m={2}>
+              <img src={movie.topReview.author_details.avatar_path} alt={movie.topReview.author_details.avatar_path} />
+            </Box>
+            <Box display="flex" flexDirection="column" m={2}>
+                <Box component="span" m={1} display="block" classes={classes.reviewAuthor}>A review by {movie.topReview.author}</Box>
+                <Box component="span" m={1} display="block" classes={classes.reviewAuthor}>Review written {movie.topReview.created_at}</Box>
+                <Box component="span" m={1} display="block">{movie.topReview.content}</Box>
+                <Box component="span" m={1} display="block">{movie.topReview.rating}</Box>
+            </Box>
+            </Box>
+        </Paper>
       </Box>
 
       <Box>
