@@ -10,7 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews"
 import Box from '@material-ui/core/Box';
-
+import { excerpt } from "../../../src/utils";
+import { Link } from "react-router-dom";
 const theme = {
   spacing: 8,
 }
@@ -134,8 +135,21 @@ const MovieDetails = ({ movie }) => {
             <Box display="flex" flexDirection="column" m={2}>
                 <Box component="span" m={1} display="block" classes={classes.reviewAuthor}>A review by {movie.topReview.author}</Box>
                 <Box component="span" m={1} display="block" classes={classes.reviewAuthor}>Review written {movie.topReview.created_at}</Box>
-                <Box component="span" m={1} display="block">{movie.topReview.content}</Box>
+                <Box component="span" m={1} display="block">{excerpt(movie.topReview.content)}</Box>
                 <Box component="span" m={1} display="block">{movie.topReview.rating}</Box>
+                <Box component="span" m={1} display="block">
+                  <Link
+                    to={{
+                      pathname: `/reviews/${movie.topReview.id}`,
+                      state: {
+                        review: movie.topReview,
+                        movie: movie,
+                      },
+                    }}
+                    >
+                    Full Review
+                  </Link>
+                </Box>
             </Box>
             </Box>
         </Paper>
