@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
+    height: "250px"
   },
   titleBar: {
     background:
@@ -139,7 +140,9 @@ const MovieDetails = ({ movie }) => {
         <GridList className={classes.gridList} cols={9}>
         {movie.castAndCrew.sortedActors.map((actor) => (
           <GridListTile key={actor.original_name}>
-            <img src={`https://image.tmdb.org/t/p/w92/${actor.profile_path}`} alt={actor.profile_path} />
+            <a href={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}>
+            <img src={`https://image.tmdb.org/t/p/w154/${actor.profile_path}`} alt={actor.profile_path} />
+            </a>
             <GridListTileBar
               title={actor.original_name}
               classes={{
