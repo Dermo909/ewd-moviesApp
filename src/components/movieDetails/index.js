@@ -12,6 +12,11 @@ import MovieReviews from "../movieReviews"
 import Box from '@material-ui/core/Box';
 import { excerpt } from "../../../src/utils";
 import { Link } from "react-router-dom";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 const theme = {
   spacing: 8,
 }
@@ -19,11 +24,14 @@ const theme = {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    justifyContent: "center",
+    //justifyContent: "center",
     flexWrap: "wrap",
     listStyle: "none",
     padding: theme.spacing(1.5),
     margin: 0,
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
   },
   chip: {
     margin: theme.spacing(0.5),
@@ -73,7 +81,16 @@ const useStyles = makeStyles((theme) => ({
   },
   reviewAuthor: {
     fontWeight: "fontWeightBold"
-  }
+  },
+  gridList: {
+    flexWrap: 'nowrap',
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+  },
+  titleBar: {
+    background:
+      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
 }));
 
 const MovieDetails = ({ movie }) => {
@@ -84,8 +101,8 @@ const MovieDetails = ({ movie }) => {
     return () => setDrawerOpen(open);
   };
 
-  // Just show 8 actors
-  const actors = movie.castAndCrew.sortedActors.splice(8);
+  // Just show actors with images
+  const actors = movie.castAndCrew.sortedActors.filter(x => x.file_path !== undefined);
   console.log('avatar path: ', movie.topReview.author_details.avatar_path);
 
   return (
@@ -118,13 +135,28 @@ const MovieDetails = ({ movie }) => {
        </Box>
         <br />
         <Box className={classes.container}>
-        {movie.castAndCrew.sortedActors.map((a) => ( 
+        <br />
+        <GridList className={classes.gridList} cols={9}>
+        {movie.castAndCrew.sortedActors.map((actor) => (
+          <GridListTile key={actor.original_name}>
+            <img src={`https://image.tmdb.org/t/p/w92/${actor.profile_path}`} alt={actor.profile_path} />
+            <GridListTileBar
+              title={actor.original_name}
+              classes={{
+                root: classes.titleBar,
+              }}
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+
+        {/* {movie.castAndCrew.sortedActors.map((a) => ( 
           <Paper key={a.original_name} className={classes.actorDetails}>
             <img classes={classes.imgSize} src={`https://image.tmdb.org/t/p/w92/${a.profile_path}`} alt={a.profile_path} />
             <br />
             <span classes={classes.actorName}>{a.original_name}</span><br />
             <span classes={classes.characterName}>{a.character}</span>
-          </Paper>))}
+          </Paper>))} */}
         </Box>
       <Box>
         <Paper>
