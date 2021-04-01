@@ -5,7 +5,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const AddToFavoritesIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
-
+  console.log('add to fave: ', movie);
   const handleAddToFavorites = (e) => {
     e.preventDefault();
     context.addToFavorites(movie.id);

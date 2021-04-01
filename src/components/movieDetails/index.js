@@ -15,8 +15,9 @@ import { Link } from "react-router-dom";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import AddToFavoritesIcon from '../cardIcons/addToFavorites';
+import AddToPlaylistIcon from '../cardIcons/addToPlaylist';
+
 const theme = {
   spacing: 8,
 }
@@ -115,7 +116,7 @@ const MovieDetails = ({ movie }) => {
           <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
         <Box>
-          Favourite Watchlist
+          {/* <AddToFavoritesIcon movie={movie}/><AddToPlaylistIcon movie={movie}/> */}
         </Box>
         <br />
         <Box className={classes.tagline}>
