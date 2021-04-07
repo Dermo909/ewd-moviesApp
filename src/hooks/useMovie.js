@@ -15,7 +15,6 @@ const useMovie = id => {
           getTopMovieReview(id).then(review => {
             movie.topReview = review;
 
-            console.log(movie);
             setMovie(movie);
           });
 
