@@ -22,7 +22,6 @@ export const getMovie = id => {
      data.vote_average = data.vote_average * 10 + '%';
      // Get production country
      data.productionCountry = data.production_countries[0].name;
-     console.log('data.productionCountry: ', data.productionCountry);
      return data;
    })
 };
