@@ -37,22 +37,22 @@ const MovieHeader = ( { movie, history}) => {
 
   return (
     <Paper component="div" className={classes.root}>
-      {/* <IconButton aria-label="go back" onClick={() => history.goBack()} >
+      <IconButton aria-label="go back" onClick={() => history.goBack()} >
         <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton> */}
+      </IconButton>
 
       <Typography variant="h4" component="h3">
         <span className={classes.movieHeader_Name}>{movie.title}</span> 
         <span className={classes.movieHeader_Year}>({movie.releaseYear})</span>
         <br />
-        <span className={classes.movieDetails}>Rated {movie.certification} ○ {movie.release_date} ○ {movie.runtime}</span>
+        <span className={classes.movieDetails}>Rated {movie.certification} ○ {movie.release_date} ○ {movie.runtime} ○ {movie.productionCountry}</span>
         {/*<a href={movie.homepage}></a>
          <br />
         <span className={classes.tagLine}>{`   "${movie.tagline}"`} </span> */}
       </Typography>
-      {/* <IconButton aria-label="go forward" onClick={() => history.goForward() } >
+      <IconButton aria-label="go forward" onClick={() => history.goForward() } >
         <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton> */}
+      </IconButton>
     </Paper>
   );
 };

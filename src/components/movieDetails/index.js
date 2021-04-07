@@ -133,10 +133,10 @@ const MovieDetails = ({ movie, action }) => {
         {movie.genres.map((g) => (
           <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
-        <Box>
+        <Box display="flex" flexDirection="row">
           {/* {favIcon } */}
           <AddToFavoritesIcon movie={movie}/>
-          {/* <AddToPlaylistIcon movie={movie}/> */}
+          <AddToPlaylistIcon movie={movie}/>
         </Box>
         <br />
         <Box className={classes.tagline}>
