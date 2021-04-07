@@ -17,6 +17,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import AddToFavoritesIcon from '../cardIcons/addToFavorites';
 import AddToPlaylistIcon from '../cardIcons/addToPlaylist';
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import Avatar from "@material-ui/core/Avatar";
 
 const theme = {
   spacing: 8,
@@ -95,13 +97,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ({ movie }) => {
+function ShowFavoriteIcon(props) {
+  console.log('props: ', props);
+  const isFavorite = props.favorite;
+
+  if (isFavorite) {
+    console.log('Is favorite');
+    return <FavoriteIcon />;
+  } else {
+    console.log('Is not favorite');
+    return <AddToFavoritesIcon movie={props}/>;
+  }
+}
+
+
+const MovieDetails = ({ movie, action }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => {
     return () => setDrawerOpen(open);
   };
+
+  const favIcon = ShowFavoriteIcon(movie);
 
   // Just show actors with images
   const actors = movie.castAndCrew.sortedActors.filter(x => x.file_path !== undefined);
@@ -116,7 +134,9 @@ const MovieDetails = ({ movie }) => {
           <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
         <Box>
-          {/* <AddToFavoritesIcon movie={movie}/><AddToPlaylistIcon movie={movie}/> */}
+          {/* {favIcon } */}
+          <AddToFavoritesIcon movie={movie}/>
+          {/* <AddToPlaylistIcon movie={movie}/> */}
         </Box>
         <br />
         <Box className={classes.tagline}>

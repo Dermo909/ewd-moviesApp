@@ -69,20 +69,32 @@ export const getTopMovieReview = (id) => {
   )
     .then((res) => res.json())
     .then((json) => {
-      const review = json.results[0];
-      console.log('review:', review);
-      // Some avatars are stored on tmdb but others are stored elsewhere
-      // If avatar path has 'http' in it then its elsewhere so we use as is
-      // If not include 'http' then its a filename on tmdb
-      if (review.author_details.avatar_path.includes('http') === false) {
-        review.author_details.avatar_path = `https://image.tmdb.org/t/p/w92${review.author_details.avatar_path}`;
+
+      if (json.results.length > 0) {
+        const review = json.results[0];
+        console.log('reviews: ', json.results);
+        console.log('review:', review);
+        // Some avatars are stored on tmdb but others are stored elsewhere
+        // If avatar path has 'http' in it then its elsewhere so we use as is
+        // If not include 'http' then its a filename on tmdb
+        if (review.author_details.avatar_path.includes('http') === false) {
+          review.author_details.avatar_path = `https://image.tmdb.org/t/p/w92${review.author_details.avatar_path}`;
+        } else {
+          // External avatars have '/' at the start
+          review.author_details.avatar_path = review.author_details.avatar_path.substring(1);
+        }
+        review.created_at = new Date(review.created_at).toDateString();
+        review.rating = review.author_details.rating;
+        return review;
       } else {
-        // External avatars have '/' at the start
-        review.author_details.avatar_path = review.author_details.avatar_path.substring(1);
+        const review = {
+          author_details: {
+            avatar_path: '',
+            rating: 0
+          }};
+          return review;
       }
-      review.created_at = new Date(review.created_at).toDateString();
-      review.rating = review.author_details.rating;
-      return review;
+      
     });
 };
 

@@ -59,12 +59,14 @@ const MoviesContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
 
   const addToFavorites = (movieId) => {
+    console.log('Add to favorite: ', movieId);
     const index = state.movies.map((m) => m.id).indexOf(movieId);
     dispatch({ type: "add-favorite", payload: { movie: state.movies[index] } });
   };
 
   const addToPlaylist = (movieId) => {
     const index = state.upcoming.map((m) => m.id).indexOf(movieId);
+    console.log('Add to playlist:', movieId);
     dispatch({ type: "add-to-playlist", payload: { movie: state.upcoming[index] } });
   };
 
