@@ -3,8 +3,9 @@ import { MoviesContext } from "../../contexts/moviesContexts";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Snackbar from '@material-ui/core/Snackbar';
-import CloseIcon from '@material-ui/icons/Close';
-import Button from '@material-ui/core/Button';
+import Alert from '@material-ui/lab/Alert';
+import Box from '@material-ui/core/Box';
+
 const AddToFavoritesIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
   const [open, setOpen] = React.useState(false);
@@ -16,37 +17,20 @@ const AddToFavoritesIcon = ({ movie }) => {
   };
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
     setOpen(false);
   };
 
   return (
+    <Box>
     <IconButton aria-label="add to favorites" onClick={handleAddToFavorites}>
       <FavoriteIcon color="primary" fontSize="large" />
-      <Snackbar
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center',
-            }}
-            open={open}
-            autoHideDuration={2000}
-            onClose={handleClose}
-            message="Movie added to favorites"
-            action={
-              <React.Fragment>
-                <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </React.Fragment>
-            }
-          />
     </IconButton>
-
-
-
+    <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success">
+          Movie added to favorites!
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 };
 
