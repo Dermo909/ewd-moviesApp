@@ -125,6 +125,10 @@ const MovieDetails = ({ movie, action }) => {
   // Just show actors with images
   const actors = movie.castAndCrew.sortedActors.filter(x => x.file_path !== undefined);
 
+  const handleGenreClick = () => {
+    console.info('You clicked the Chip.');
+  };
+
   return (
     <Box>
       <Box>
@@ -142,7 +146,7 @@ const MovieDetails = ({ movie, action }) => {
           })()}
         
         {movie.genres.map((g) => (
-          <Chip key={g.name} label={g.name} className={classes.chip} />
+          <Chip key={g.name} label={g.name} className={classes.chip} onClick={handleGenreClick}/>
         ))}
         <Box display="flex" flexDirection="row">
           {/* {favIcon } */}
