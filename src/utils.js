@@ -7,3 +7,7 @@ export function excerpt(string) {
     separator: /,?\.* +/, // separate by spaces, including preceding commas and periods
   });
 }
+
+export function convertToPercentage(num) {
+  return num * 10 + '%';
+}

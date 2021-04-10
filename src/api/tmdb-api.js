@@ -1,9 +1,15 @@
+import { convertToPercentage } from '../utils';
+
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&include_adult=false&page=1`
   )
     .then(res => res.json())
-    .then(json => json.results);
+    .then(json => { 
+      json.results.forEach(x => {
+        x.vote_average = convertToPercentage(x.vote_average);
+      });
+      return json.results; });
 };
 
 export const getMovie = id => {
@@ -19,7 +25,7 @@ export const getMovie = id => {
      const minutes = data.runtime % 60;
      data.runtime = hours + 'h' + minutes + 'm';
      // format user score
-     data.vote_average = data.vote_average * 10 + '%';
+     data.vote_average = convertToPercentage(data.vote_average);// data.vote_average * 10 + '%';
      // Get production country
      data.productionCountry = data.production_countries[0].name;
      return data;
@@ -144,7 +150,7 @@ export const getTop100Movies = () => {
   .then(json => {
     console.log('top 100:', json.results);
     json.results.forEach(x => {
-      x.vote_average = x.vote_average * 10 + '%';
+      x.vote_average = convertToPercentage(x.vote_average);// * 10 + '%';
     });
     return json.results;
   });
@@ -181,3 +187,5 @@ export const getCastAndCrew = id => {
       return filteredData;
     })
 };
+
+
