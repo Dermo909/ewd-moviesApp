@@ -15,10 +15,10 @@ import Grid from "@material-ui/core/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import Avatar from "@material-ui/core/Avatar";
 import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
-
+import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
-  card: { maxWidth: 345 },
-  media: { height: 500 },
+  card: { maxWidth: 250 },
+  media: { height: 400 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -29,7 +29,7 @@ export default function MovieCard({ movie, action }) {
   return (
 
     <Card className={classes.card}>
-      <CardHeader
+      {/* <CardHeader
         className={classes.header}
         avatar={
           movie.favorite ? (
@@ -47,7 +47,7 @@ export default function MovieCard({ movie, action }) {
             {movie.title}{" "}
           </Typography>
         }
-      />
+      /> */}
       <Link to={`/movies/${movie.id}`}>
       <CardMedia
         className={classes.media}
@@ -60,16 +60,29 @@ export default function MovieCard({ movie, action }) {
       </Link>
       <CardContent>
         <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {movie.release_date}
+        <Grid item xs={12}>
+            <Typography variant="h6">
+              <Box fontWeight="fontWeightBold" fontSize={18}>
+                {movie.title}
+              </Box>
             </Typography>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
+        </Grid>
+        <Grid container>
+          <Grid item xs={8}>
+            <Typography variant="h6">
+              <Box fontWeight="fontWeightMedium" fontSize={14}>
+              <CalendarIcon fontSize="small" />
+              {movie.release_date}
+              </Box>
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6">
+            <Box fontWeight="fontWeightMedium" fontSize={14}>
               <StarRateIcon fontSize="small" />
               {"  "} {movie.vote_average}{" "}
+              </Box>
             </Typography>
           </Grid>
         </Grid>
