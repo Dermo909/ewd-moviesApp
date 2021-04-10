@@ -10,6 +10,8 @@ import { withRouter } from "react-router-dom";
 import MenuItem from "@material-ui/core/MenuItem";
 import Snackbar from "@material-ui/core/Snackbar"; 
 import MuiAlert from "@material-ui/lab/Alert";
+import Alert from '@material-ui/lab/Alert';
+import { convertUserRatingToPercentage } from '../../utils';
 
 const ratings = [
   {
@@ -70,7 +72,7 @@ const ReviewForm = ({ movie, history }) => {
 
   const handleSnackClose = (event) => {
     setOpen(false);
-    history.push("/movies/favorites");
+    history.push("/");
   };
 
   const handleRatingChange = (event) => {
@@ -80,7 +82,10 @@ const ReviewForm = ({ movie, history }) => {
   const onSubmit = (review) => {
     review.movieId = movie.id;
     review.rating = rating;
-    // console.log(review);
+
+    // Saving to local storage to display users rating on movie also
+    localStorage.setItem(`UserRating${movie.id}`, convertUserRatingToPercentage(rating));
+
     context.addReview(movie, review);
     setOpen(true);   // NEW
   };
@@ -89,7 +94,7 @@ const ReviewForm = ({ movie, history }) => {
       <Typography component="h2" variant="h3">
         Write a review
       </Typography>
-      <Snackbar
+      {/* <Snackbar
         className={classes.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={open}
@@ -104,6 +109,11 @@ const ReviewForm = ({ movie, history }) => {
             Thank you for submitting a review
           </Typography>
         </MuiAlert>
+      </Snackbar> */}
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="success">
+        Thank you for submitting a review!
+        </Alert>
       </Snackbar>
       <form
         className={classes.form}

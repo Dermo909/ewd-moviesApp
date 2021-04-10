@@ -11,3 +11,7 @@ export function excerpt(string) {
 export function convertToPercentage(num) {
   return num * 10 + '%';
 }
+
+export function convertUserRatingToPercentage(num) {
+  return num * 2 * 10 + '%';
+}

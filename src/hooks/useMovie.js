@@ -15,6 +15,7 @@ const useMovie = id => {
           getTopMovieReview(id).then(review => {
             movie.topReview = review;
 
+            movie.userRating = localStorage.getItem(`UserRating${movie.id}`);
             setMovie(movie);
           });
 

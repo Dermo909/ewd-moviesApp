@@ -19,6 +19,7 @@ import AddToFavoritesIcon from '../cardIcons/addToFavorites';
 import AddToPlaylistIcon from '../cardIcons/addToPlaylist';
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Avatar from "@material-ui/core/Avatar";
+import WriteReview from "../cardIcons/writeReview";
 
 const theme = {
   spacing: 8,
@@ -123,13 +124,23 @@ const MovieDetails = ({ movie, action }) => {
 
   // Just show actors with images
   const actors = movie.castAndCrew.sortedActors.filter(x => x.file_path !== undefined);
-  console.log('avatar path: ', movie.topReview.author_details.avatar_path);
 
   return (
     <Box>
       <Box>
       <Typography variant="h6" component="span">
-        <Chip icon={<StarRate />} label={`${movie.vote_average}`} />
+          {(() => {
+            if (movie.userRating !== null) {
+              return <Chip icon={<StarRate />} label={`${movie.userRating}`}     style={{
+
+                backgroundColor: "#32a852"
+
+            }}/>;
+            } else {
+              return <Chip icon={<StarRate />} label={`${movie.vote_average}`} />;
+            }
+          })()}
+        
         {movie.genres.map((g) => (
           <Chip key={g.name} label={g.name} className={classes.chip} />
         ))}
@@ -137,6 +148,14 @@ const MovieDetails = ({ movie, action }) => {
           {/* {favIcon } */}
           <AddToFavoritesIcon movie={movie}/>
           <AddToPlaylistIcon movie={movie}/>
+          <Box>
+            {(() => {
+              if (movie.userRating === null) {
+                return <WriteReview movie={movie} />;
+              }
+            })()}
+          </Box>
+          
         </Box>
         <br />
         <Box className={classes.tagline}>
@@ -219,7 +238,7 @@ const MovieDetails = ({ movie, action }) => {
         className={classes.fab}
       >
         <NavigationIcon />
-        Reviews
+        All Reviews
       </Fab>
       <Drawer anchor="top" open={drawerOpen} onClose={toggleDrawer(false)}>
         <MovieReviews movie={movie} />
