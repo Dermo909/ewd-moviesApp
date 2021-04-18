@@ -34,5 +34,6 @@
     "@bahmutov/print-env": "1.2.0",
     "@storybook/addon-actions": "^6.1.19",
     "@storybook/react": "^6.1.19"
-  }
+  },
+  "proxy":"http://localhost:8080"
 }

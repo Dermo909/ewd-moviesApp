@@ -3,6 +3,10 @@ import { convertToPercentage } from '../utils';
 export const getMovies = () => {
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-GB&include_adult=false&page=1`
+    // API lab 1
+    //`https://virtserver.swaggerhub.com/Dermo909/MovieAPI/1.0/api/movies`
+    // API lab 2
+    //`/api/movies`
   )
     .then(res => res.json())
     .then(json => { 
