@@ -9,6 +9,9 @@ const FavoriteMoviesPage = () => {
   const { movies } = context;
   const favoriteMovies = movies.filter((m) => m.favorite);
 
+  const isLoggedIn = localStorage.getItem('LoggedIn') === 'true' ? true : false;
+  // const userNameMessage = isLoggedIn === true ? 'Hi, ' + localStorage.getItem('UserName') : '';
+
   return (
     <PageTemplate
       title="Favorite Movies"
