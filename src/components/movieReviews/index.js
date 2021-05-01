@@ -23,6 +23,17 @@ export default function MovieReviews({ movie }) {
 
   useEffect(() => {
     getMovieReviews(movie.id).then((reviews) => {
+      // Did the user review this?
+      const userReview = localStorage.getItem(`Review${movie.id}`);
+      const userName = localStorage.getItem('UserName');
+      if(userReview !== null) {
+        const review = {
+          author: userName,
+          content: userReview
+        }; 
+        reviews.push(review);
+      }
+      
       setReviews(reviews);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

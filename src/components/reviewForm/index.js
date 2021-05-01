@@ -191,7 +191,7 @@ const ReviewForm = ({ movie, history }) => {
 
     // Saving to local storage to display users rating on movie also
     localStorage.setItem(`UserRating${movie.id}`, convertUserRatingToPercentage(rating));
-
+    localStorage.setItem(`Review${movie.id}`, review.content);
     context.addReview(movie, review);
     setOpen(true);   // NEW
   };
