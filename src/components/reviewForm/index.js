@@ -71,6 +71,7 @@ const ReviewForm = ({ movie, history }) => {
   const [open, setOpen] = React.useState(false);
 
   const isLoggedIn = localStorage.getItem('LoggedIn');
+  const userName = localStorage.getItem('UserName');
 
   const renderPage = () => {
     if (isLoggedIn === 'true') {
@@ -100,6 +101,7 @@ const ReviewForm = ({ movie, history }) => {
               name="author"
               autoFocus
               inputRef={register({ required: "Author name required" })}
+              value={userName}
             />
             {errors.author && (
               <Typography variant="h6" component="p">
