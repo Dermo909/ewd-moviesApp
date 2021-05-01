@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,6 +41,11 @@ const LoginForm = () => {
 
     let name = '';
 
+    localStorage.removeItem('UserName');
+    localStorage.setItem('LoggedIn', false);
+    const history = useHistory();
+    const navigateTo = () => history.push('/componentURL');
+
     const handleNameChange = (e) => {
         name = e.target.value;
     }
@@ -49,6 +54,7 @@ const LoginForm = () => {
         // Saving to local storage to display users name on header
         localStorage.setItem('UserName', name);
         localStorage.setItem('LoggedIn', 'true');
+        navigateTo();
     };
 
     return (
@@ -59,7 +65,7 @@ const LoginForm = () => {
         </Typography>
 
         <form
-          className={classes.form}
+          className={classes.root}
           onSubmit={handleSubmit(onSubmit)}
           noValidate
         >
