@@ -70,6 +70,110 @@ const ReviewForm = ({ movie, history }) => {
   const [rating, setRating] = useState(3);
   const [open, setOpen] = React.useState(false);
 
+  const isLoggedIn = localStorage.getItem('LoggedIn');
+
+  const renderPage = () => {
+    if (isLoggedIn === 'true') {
+      return (
+        <Box component="div" className={classes.root}>
+          <Typography component="h2" variant="h3">
+            Write a review
+          </Typography>
+    
+          <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackClose}>
+            <Alert onClose={handleSnackClose} severity="success">
+            Thank you for submitting a review!
+            </Alert>
+          </Snackbar>
+          <form
+            className={classes.form}
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
+            <TextField
+              className={classes.textField}
+              variant="outlined"
+              margin="normal"
+              required
+              id="author"
+              label="Author's name"
+              name="author"
+              autoFocus
+              inputRef={register({ required: "Author name required" })}
+            />
+            {errors.author && (
+              <Typography variant="h6" component="p">
+                {errors.author.message}
+              </Typography>
+            )}
+    
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="content"
+              label="Review text"
+              id="content"
+              multiline
+              rows={10}
+              inputRef={register({
+                required: "No review text",
+                minLength: { value: 10, message: "Review is too short" },
+              })}
+            />
+            {errors.content && (
+              <Typography variant="h6" component="p">
+                {errors.content.message}
+              </Typography>
+            )}
+            <TextField
+              id="select-rating"
+              select
+              variant="outlined"
+              label="Rating Select"
+              value={rating}
+              onChange={handleRatingChange}
+              helperText="Don't forget your rating"
+            >
+              {ratings.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+    
+            <Box className={classes.buttons}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Submit
+              </Button>
+              <Button
+                type="reset"
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+                onClick={() => {
+                  reset({
+                    author: "",
+                    content: "",
+                  });
+                }}
+              >
+                Reset
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      );
+    } else {
+      return <h1>You need to be logged in to access this page</h1>;
+    }
+  }
   const handleSnackClose = (event) => {
     setOpen(false);
     history.push("/");
@@ -90,115 +194,9 @@ const ReviewForm = ({ movie, history }) => {
     setOpen(true);   // NEW
   };
   return (
-    <Box component="div" className={classes.root}>
-      <Typography component="h2" variant="h3">
-        Write a review
-      </Typography>
-      {/* <Snackbar
-        className={classes.snack}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={open}
-        onClose={handleSnackClose}
-      >
-        <MuiAlert
-          severity="success"
-          variant="filled"
-          onClose={handleSnackClose}
-        >
-          <Typography variant="h4">
-            Thank you for submitting a review
-          </Typography>
-        </MuiAlert>
-      </Snackbar> */}
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleSnackClose}>
-        <Alert onClose={handleSnackClose} severity="success">
-        Thank you for submitting a review!
-        </Alert>
-      </Snackbar>
-      <form
-        className={classes.form}
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-      >
-        <TextField
-          className={classes.textField}
-          variant="outlined"
-          margin="normal"
-          required
-          id="author"
-          label="Author's name"
-          name="author"
-          autoFocus
-          inputRef={register({ required: "Author name required" })}
-        />
-        {errors.author && (
-          <Typography variant="h6" component="p">
-            {errors.author.message}
-          </Typography>
-        )}
-
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="content"
-          label="Review text"
-          id="content"
-          multiline
-          rows={10}
-          inputRef={register({
-            required: "No review text",
-            minLength: { value: 10, message: "Review is too short" },
-          })}
-        />
-        {errors.content && (
-          <Typography variant="h6" component="p">
-            {errors.content.message}
-          </Typography>
-        )}
-        <TextField
-          id="select-rating"
-          select
-          variant="outlined"
-          label="Rating Select"
-          value={rating}
-          onChange={handleRatingChange}
-          helperText="Don't forget your rating"
-        >
-          {ratings.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-
-        <Box className={classes.buttons}>
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Submit
-          </Button>
-          <Button
-            type="reset"
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            onClick={() => {
-              reset({
-                author: "",
-                content: "",
-              });
-            }}
-          >
-            Reset
-          </Button>
-        </Box>
-      </form>
-    </Box>
+    <div>
+      {renderPage()}
+    </div>
   );
 };
 

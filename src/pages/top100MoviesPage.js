@@ -14,7 +14,7 @@ const Top100MoviesPage = () => {
 
     return (
         <PageTemplate
-            title="Top 100 Movies"
+            title="Top Rated Movies"
             movies={movies}
         />
     );

@@ -89,11 +89,13 @@ export const getTopMovieReview = (id) => {
         // Some avatars are stored on tmdb but others are stored elsewhere
         // If avatar path has 'http' in it then its elsewhere so we use as is
         // If not include 'http' then its a filename on tmdb
-        if (review.author_details.avatar_path.includes('http') === false) {
-          review.author_details.avatar_path = `https://image.tmdb.org/t/p/w92${review.author_details.avatar_path}`;
-        } else {
-          // External avatars have '/' at the start
-          review.author_details.avatar_path = review.author_details.avatar_path.substring(1);
+        if (review.author_details.avatar_path !== null) {
+          if (review.author_details.avatar_path.includes('http') === false) {
+            review.author_details.avatar_path = `https://image.tmdb.org/t/p/w92${review.author_details.avatar_path}`;
+          } else {
+            // External avatars have '/' at the start
+            review.author_details.avatar_path = review.author_details.avatar_path.substring(1);
+          }
         }
         review.created_at = new Date(review.created_at).toDateString();
         review.rating = review.author_details.rating;
@@ -152,7 +154,6 @@ export const getTop100Movies = () => {
 )
   .then(res => res.json())
   .then(json => {
-    console.log('top 100:', json.results);
     json.results.forEach(x => {
       x.vote_average = convertToPercentage(x.vote_average);// * 10 + '%';
     });
