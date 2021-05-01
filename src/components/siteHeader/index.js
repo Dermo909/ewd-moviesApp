@@ -35,7 +35,6 @@ const SiteHeader = ( { history }) => {
     { label: "Top 100 Movies", path: "/movies/top100" },
   ];
 
-  const userName = localStorage.getItem('userName');
   const handleMenuSelect = (pageURL) => {
     history.push(pageURL);
   };
@@ -85,7 +84,6 @@ const SiteHeader = ( { history }) => {
                       {opt.label}
                     </MenuItem>
                   ))}
-                  {userName}
                 </Menu>
               </>
             ) : (
