@@ -10,10 +10,8 @@ const FavoriteMoviesPage = () => {
   const favoriteMovies = movies.filter((m) => m.favorite);
 
   const isLoggedIn = localStorage.getItem('LoggedIn');
-  console.log('isLoggedIn:', isLoggedIn);
 
   const renderPage = () => {
-    console.log('Rendering page, isLoggedIn:', isLoggedIn);
     if (isLoggedIn === 'true') {
       return (
         <PageTemplate
@@ -36,7 +34,7 @@ const FavoriteMoviesPage = () => {
 
   return (
     <div>
-    {renderPage()}
+      {renderPage()}
     </div>
   );
 };

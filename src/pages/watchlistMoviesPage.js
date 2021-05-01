@@ -8,19 +8,33 @@ const WatchlistMoviesPage = () => {
   const context = useContext(MoviesContext);
   const { upcoming } = context;
   const watchlistMovies = upcoming.filter((m) => m.playlist);
-  console.log('watchlistMovies: ', watchlistMovies);
+
+  const isLoggedIn = localStorage.getItem('LoggedIn');
+
+  const renderPage = () => {
+    if (isLoggedIn === 'true') {
+      return (
+        <PageTemplate
+        title="Watchlist"
+        movies={watchlistMovies}
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromWatchlist movie={movie} />
+            </>
+          );
+        }}
+      />
+      );
+    } else {
+      return <h1>You need to be logged in to access this page</h1>;
+    }
+  }
+
   return (
-    <PageTemplate
-      title="Watchlist"
-      movies={watchlistMovies}
-      action={(movie) => {
-        return (
-          <>
-            <RemoveFromWatchlist movie={movie} />
-          </>
-        );
-      }}
-    />
+    <div>
+      {renderPage()}
+    </div>
   );
 };
 
