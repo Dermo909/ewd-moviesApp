@@ -8,6 +8,7 @@ import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
 import { AuthContext } from './../../contexts/authContext';
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LoginForm = () => {
+const LoginForm = props => {
   const context = useContext(AuthContext);
     const classes = useStyles();
     const { register, handleSubmit, errors, reset } = useForm();
@@ -45,11 +46,14 @@ const LoginForm = () => {
     const [password, setPassword] = useState("");
 
     const onSubmit = (e) => {
-      console.log('context: ', context);
-      console.log('username: ', userName);
-      console.log('password: ', password);
       context.authenticate(userName, password);
     };
+
+    const { from } = props.location.state || { from: { pathname: "/" } };
+
+    if (context.isAuthenticated === true) {
+      return <Redirect to={from} />;
+    }
 
     return (
         <Box component="div" className={classes.root}>
