@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -6,7 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import useForm from "react-hook-form";
 import { withRouter } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { AuthContext } from './../../contexts/authContext';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,32 +37,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = () => {
+  const context = useContext(AuthContext);
     const classes = useStyles();
     const { register, handleSubmit, errors, reset } = useForm();
 
-    let name = '';
-
-    localStorage.removeItem('UserName');
-    localStorage.setItem('LoggedIn', false);
-    const history = useHistory();
-    const navigateTo = () => history.push('/componentURL');
-
-    const handleNameChange = (e) => {
-        name = e.target.value;
-    }
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
 
     const onSubmit = (e) => {
-        // Saving to local storage to display users name on header
-        localStorage.setItem('UserName', name);
-        localStorage.setItem('LoggedIn', 'true');
-        navigateTo();
+      console.log('context: ', context);
+      console.log('username: ', userName);
+      console.log('password: ', password);
+      context.authenticate(userName, password);
     };
 
     return (
         <Box component="div" className={classes.root}>
-            {name}
         <Typography component="h2" variant="h3">
-          Please enter your name
+          Please log in
         </Typography>
 
         <form
@@ -79,7 +72,20 @@ const LoginForm = () => {
             name="name"
             autoFocus
             inputRef={register({ required: "User name required" })}
-            onBlur={handleNameChange}
+            onBlur={e => {setUserName(e.target.value)}}
+          />
+          <TextField
+            className={classes.textField}
+            variant="outlined"
+            margin="normal"
+            required
+            id="name"
+            label="password"
+            name="password"
+            type="password"
+            autoFocus
+            inputRef={register({ required: "Password required" })}
+            onBlur={e => {setPassword(e.target.value)}}
           />
           {errors.name && (
             <Typography variant="h6" component="p">
@@ -102,16 +108,20 @@ const LoginForm = () => {
               className={classes.submit}
               onClick={() => {
                 reset({
-                  name: ""
+                  userName: "", password: ""
                 });
               }}
             >
               Reset
             </Button>
           </Box>
+          <p>Not Registered?
+            <Link to="/signup">Sign Up!</Link>
+          </p>
         </form>
         </Box>
     );
 }
 
 export default withRouter(LoginForm);
+

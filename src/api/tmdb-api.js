@@ -13,6 +13,7 @@ export const getMovies = () => {
       json.results.forEach(x => {
         x.vote_average = convertToPercentage(x.vote_average);
       });
+      console.log('json.results: ', json.results);
       return json.results; });
 };
 
@@ -29,7 +30,7 @@ export const getMovie = id => {
      const minutes = data.runtime % 60;
      data.runtime = hours + 'h' + minutes + 'm';
      // format user score
-     data.vote_average = convertToPercentage(data.vote_average);// data.vote_average * 10 + '%';
+     data.vote_average = convertToPercentage(data.vote_average);
      // Get production country
      data.productionCountry = data.production_countries[0].name;
      return data;
