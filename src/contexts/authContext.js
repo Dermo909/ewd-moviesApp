@@ -16,7 +16,6 @@ const AuthContextProvider = (props) => {
   }
 
   const authenticate = async (username, password) => {
-      console.log('Authenticate');
     const result = await login(username, password);
     if (result.token) {
       setToken(result.token)

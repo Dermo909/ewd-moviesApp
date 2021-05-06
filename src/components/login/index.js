@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginForm = props => {
-  const context = useContext(AuthContext);
+    const context = useContext(AuthContext);
     const classes = useStyles();
     const { register, handleSubmit, errors, reset } = useForm();
 

@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect, useState } from "react";
-import { getMovies, getUpcomingMovies } from "../api/tmdb-api";
+import { getUpcomingMovies } from "../api/tmdb-api";
+import { getMovies } from "../api/movie-api";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -103,6 +104,7 @@ const MoviesContextProvider = (props) => {
   useEffect(() => {
     async function fetchMovies() {
       const result = await getMovies();
+      console.log('result: ', result);
       dispatch({ type: "load", payload: { result } });
     }
     fetchMovies();

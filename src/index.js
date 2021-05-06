@@ -14,7 +14,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage';
 import WatchlistMoviesPage from './pages/watchlistMoviesPage';
 import Top100MoviesPage from './pages/top100MoviesPage';
 import LoginPage from './pages/login';
-
+import SignUpPage from './components/SignUp';
 const App = () => {
   return (
     <BrowserRouter>
@@ -25,8 +25,9 @@ const App = () => {
             <GenresContextProvider> 
               <AuthProvider>
               <Switch>
-              <Route exact path="/login" component={LoginPage} />
-              <Route exact path="/" component={HomePage} />
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/signup" component={SignUpPage} />
+                <Route exact path="/" component={HomePage} />
                 <Route exact path="/reviews/form" component={AddMovieReviewPage} />
                 <Route exact path="/movies/favorites" component={FavoriteMoviesPage} />
                 <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />

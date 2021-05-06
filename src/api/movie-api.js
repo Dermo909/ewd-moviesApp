@@ -8,7 +8,7 @@ export const login = async (username, password) => {
         method: 'post',
         body: JSON.stringify({ username: username, password: password })
     });
-    console.log('res.json: ', res.json);
+    console.log('login res.json: ', res.json);
     return res.json();
 };
 
@@ -20,6 +20,7 @@ export const signup = async (username, password) => {
         method: 'post',
         body: JSON.stringify({ username: username, password: password })
     })
+    console.log('signup res.json: ', res.json);
     return res.json();
 };
 
