@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useState } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import { getMovies } from "../api/movie-api";
+import { convertReleaseDateToString, convertToPercentage } from '../utils';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -31,6 +32,7 @@ const reducer = (state, action) => {
         ),
       };
     case "load-discover-movies":
+      console.log('case load-discover-movies ', action.payload);
       return {
         movies: action.payload.movies,
         upcoming: [...state.upcoming],
@@ -103,9 +105,16 @@ const MoviesContextProvider = (props) => {
 
   useEffect(() => {
     async function fetchMovies() {
-      const result = await getMovies();
-      console.log('result: ', result);
-      dispatch({ type: "load", payload: { result } });
+      const moviesResult = await getMovies();
+      console.log('useEffect getMovies result: ', moviesResult);
+
+      moviesResult.results.forEach(x => {
+        x.vote_average = convertToPercentage(x.vote_average);
+        x.release_date = convertReleaseDateToString(x.release_date);
+      });
+
+      const movies = moviesResult.results;
+      dispatch({ type: "load-discover-movies", payload: { movies } });
     }
     fetchMovies();
   }, []);

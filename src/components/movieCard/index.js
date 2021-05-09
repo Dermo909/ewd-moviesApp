@@ -26,6 +26,7 @@ const useStyles = makeStyles({
 
 export default function MovieCard({ movie, action }) {
   const classes = useStyles();
+  console.log('movieCard');
   return (
 
     <Card className={classes.card}>
@@ -48,11 +49,11 @@ export default function MovieCard({ movie, action }) {
           </Typography>
         }
       /> */}
-      <Link to={`/movies/${movie.id}`}>
+      <Link to={`/movies/${movie._id}`}>
       <CardMedia
         className={classes.media}
         image={
-          movie.poster_path
+          movie.poster_path !== 'null'
             ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
             : img
         }

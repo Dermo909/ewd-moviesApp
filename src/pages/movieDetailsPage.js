@@ -11,6 +11,7 @@ const MovieDetailsPage = ({
     params: { id },
   },
 }) => {
+  console.log('movieDetailsPage, id: ', id);
   const [movie] = useMovie(id);
 
   return (

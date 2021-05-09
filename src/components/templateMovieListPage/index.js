@@ -17,6 +17,8 @@ function MovieListPageTemplate({ movies, title, action }) {
   const [genreFilter, setGenreFilter] = useState("0");
   const genre = Number(genreFilter);
 
+  console.log('movies.results in template movies list page: ', movies.results);
+
   let displayedMovies = movies
     .filter((m) => {
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
@@ -24,7 +26,7 @@ function MovieListPageTemplate({ movies, title, action }) {
     .filter((m) => {
       return genre > 0 ? m.genre_ids.includes(Number(genreFilter)) : true;
     });
-
+    console.log('displayedMovies in template movie list page: ', displayedMovies);
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
     else setGenreFilter(value);

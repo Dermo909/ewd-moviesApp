@@ -115,7 +115,7 @@ function ShowFavoriteIcon(props) {
 const MovieDetails = ({ movie, action }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  console.log('movie details: ', movie);
   const toggleDrawer = (open) => {
     return () => setDrawerOpen(open);
   };

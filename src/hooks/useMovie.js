@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { getFilmCertification, getMovie, getCastAndCrew, getTopMovieReview } from '../api/tmdb-api'
+import { getFilmCertification,  getCastAndCrew, getTopMovieReview } from '../api/tmdb-api'
+import { getMovie } from '../api/movie-api.js';
 
 const useMovie = id => {
   const [movie, setMovie] = useState(null);
   useEffect(() => {
+    console.log('useEffect');
     getMovie(id).then(movie => {
 
       getFilmCertification(id).then(cert => {

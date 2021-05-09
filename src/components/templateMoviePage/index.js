@@ -42,7 +42,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                 <GridListTile key={movie.mainPoster} className={classes.gridListTile} cols={1}>
                   <Box>
                   <img 
-                    src={`https://image.tmdb.org/t/p/w500/${movie.mainPoster}`}
+                    src={`https://image.tmdb.org/t/p/w501/${movie.mainPoster}`}
                     alt={movie.mainPoster}
                   />
                   </Box>

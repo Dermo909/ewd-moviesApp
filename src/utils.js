@@ -15,3 +15,7 @@ export function convertToPercentage(num) {
 export function convertUserRatingToPercentage(num) {
   return num * 2 * 10 + '%';
 }
+
+export function convertReleaseDateToString(dateString) {
+  return dateString.substring(0, 10);
+}
