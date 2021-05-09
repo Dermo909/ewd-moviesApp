@@ -6,7 +6,7 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import { getMovieImages } from "../../api/tmdb-api";
 import Box from '@material-ui/core/Box';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",

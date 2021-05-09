@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFilmCertification,  getCastAndCrew, getTopMovieReview } from '../api/tmdb-api'
 import { getMovie } from '../api/movie-api.js';
+import { formatMovieRuntime, convertToPercentage, convertReleaseDateToString } from '../utils';
 
 const useMovie = id => {
   const [movie, setMovie] = useState(null);
@@ -8,20 +9,32 @@ const useMovie = id => {
     console.log('useEffect');
     getMovie(id).then(movie => {
 
-      getFilmCertification(id).then(cert => {
-        movie.certification = cert;
+      // Add release year member
+      movie.releaseYear = movie.release_date.substring(0, 4);
 
-        getCastAndCrew(id).then(castAndCrew => {
-          movie.castAndCrew = castAndCrew;
+      // Format release date
+      movie.release_date = convertReleaseDateToString(movie.release_date);
 
-          getTopMovieReview(id).then(review => {
-            movie.topReview = review;
+      // Format runtime
+      movie.runtime = formatMovieRuntime(movie.runtime);
 
-            movie.userRating = localStorage.getItem(`UserRating${movie.id}`);
-            setMovie(movie);
-          });
+      // format user score
+      movie.vote_average = convertToPercentage(movie.vote_average);
+      
+      // Get production country
+      movie.productionCountry = movie.production_countries[0].name;
 
-        })
+      console.log('movie in useMovie: ', movie);
+
+      getCastAndCrew(movie.id).then(castAndCrew => {
+        movie.castAndCrew = castAndCrew;
+
+        getTopMovieReview(movie.id).then(review => {
+          movie.topReview = review;
+
+          movie.userRating = localStorage.getItem(`UserRating${movie.id}`);
+          setMovie(movie);
+        });
 
       })
 
