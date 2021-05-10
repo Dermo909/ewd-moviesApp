@@ -146,7 +146,7 @@ const MovieDetails = ({ movie, action }) => {
           })()}
         
         {movie.genres.map((g) => (
-          <Chip key={g.name} label={g.name} className={classes.chip} onClick={handleGenreClick}/>
+          <Chip key={g.id} label={g.name} className={classes.chip} onClick={handleGenreClick}/>
         ))}
         <Box display="flex" flexDirection="row">
           {/* {favIcon } */}
