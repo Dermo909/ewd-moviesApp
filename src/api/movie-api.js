@@ -48,23 +48,7 @@ export const getMovie = async (id) => {
     )
 
     return res.json();
-    // return fetch(
-    //   `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    // ).then(res => res.json())
-    //  .then(data => {
-    //    console.log(data);
-    //    // Add release year member
-    //    data.releaseYear = data.release_date.substring(0, 4);
-    //    // Format runtime
-    //    const hours = Math.floor(data.runtime / 60);
-    //    const minutes = data.runtime % 60;
-    //    data.runtime = hours + 'h' + minutes + 'm';
-    //    // format user score
-    //    //data.vote_average = convertToPercentage(data.vote_average);
-    //    // Get production country
-    //    data.productionCountry = data.production_countries[0].name;
-    //    return data;
-    //  })
+
   };
 
   export const getCastAndCrew = async (id) => {
@@ -79,33 +63,36 @@ export const getMovie = async (id) => {
     )
     return res.json();
 
-    // return fetch(
-    //   `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    // ).then(res => res.json())
-    //   .then(data => {
-    //     console.log('Cast and crew: ', data);
-    //     const filteredData = [];
-    //     // Get some details
-    //     // There might be more than one of each but we're only interested in one
-    //     filteredData.director = data.crew.filter(x => x.known_for_department === 'Directing')[0];
-    //     filteredData.writer = data.crew.filter(x => x.known_for_department === 'Writing')[0];
-    //     filteredData.producer = data.crew.filter(x => x.known_for_department === 'Production')[0];
-  
-    //     if (filteredData.director === undefined) {
-    //       filteredData.director = "<none specified>";
-    //     }
-    //     if (filteredData.writer === undefined) {
-    //       filteredData.writer = "<none specified>";
-    //     }
-    //     if (filteredData.producer === undefined) {
-    //       filteredData.producer = "<none specified>";
-    //     }
-    //     // Order the actors by popularity 
-    //     // Front end will decide how many to show
-    //     filteredData.sortedActors = Object.keys(data.cast).sort(function(a,b){
-    //                         return data.cast[a.popularity]-data.cast[b.popularity]
-    //                         }).map(key => data.cast[key]);
-    //                         console.log(filteredData.sortedActors);
-    //     return filteredData;
-    //   })
   };
+
+  export const addMovieToFavourites = async (username, id) => {
+      console.log('Adding to favourites');
+      const url = `/api/users/${username}/favourites`;
+      console.log('url', url);
+    const res = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': window.localStorage.getItem('token')
+        },
+        method: 'post',
+        body: JSON.stringify({ username: username, id: id })
+    })
+
+    return res.json();
+};
+
+export const addMovieToWatchlist = async (username, id) => {
+    console.log('Adding to watchlist');
+    const url = `/api/users/${username}/watchlist`;
+    console.log('url', url);
+  const res = await fetch(url, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.localStorage.getItem('token')
+      },
+      method: 'post',
+      body: JSON.stringify({ username: username, id: id })
+  })
+
+  return res.json();
+};

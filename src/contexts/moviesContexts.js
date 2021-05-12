@@ -1,29 +1,17 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState, useContext } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
-import { getMovies } from "../api/movie-api";
+import { getMovies, addMovieToFavourites, addMovieToWatchlist } from "../api/movie-api";
 import { convertReleaseDateToString, convertToPercentage } from '../utils';
+import { AuthContext } from './authContext';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "add-favorite":
-      return {
-        movies: state.movies.map((m) =>
-          m.id === action.payload.movie.id ? { ...m, favorite: true } : m
-        ),
-        upcoming: [...state.upcoming],
-      };
     case "remove-favorite":
       return {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: false } : m
         ),
         upcoming: [...state.upcoming],
-      };
-    case "add-to-playlist":
-      return {
-        upcoming: state.upcoming.map((m) =>
-          m.id === action.payload.movie.id ? { ...m, playlist: true } : m
-        ),
       };
     case "remove-from-playlist":
       return {
@@ -62,16 +50,27 @@ const MoviesContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
   const [authenticated, setAuthenticated] = useState(false);
 
+  const auth = useContext(AuthContext);
+  console.log('auth: ', auth);
+  
   const addToFavorites = (movieId) => {
     console.log('Add to favorite: ', movieId);
-    const index = state.movies.map((m) => m.id).indexOf(movieId);
-    dispatch({ type: "add-favorite", payload: { movie: state.movies[index] } });
+
+    async function addToFavourites() {
+      const result = await addMovieToFavourites(auth.userName, movieId);
+      console.log('addToFavourites result: ', result);
+    }
+    addToFavourites();
   };
 
   const addToPlaylist = (movieId) => {
-    const index = state.upcoming.map((m) => m.id).indexOf(movieId);
-    console.log('Add to playlist:', movieId);
-    dispatch({ type: "add-to-playlist", payload: { movie: state.upcoming[index] } });
+    console.log('Add to watchlist: ', movieId);
+
+    async function addToWatchlist() {
+      const result = await addMovieToWatchlist(auth.userName, movieId);
+      console.log('addToFavourites result: ', result);
+    }
+    addToWatchlist();
   };
 
   const removeFromPlaylist = (movieId) => {

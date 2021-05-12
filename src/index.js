@@ -21,9 +21,10 @@ const App = () => {
       <div className="jumbotron">
         <SiteHeader />
         <div className="container-fluid">
+        <AuthProvider>
           <MoviesContextProvider>
-            <GenresContextProvider> 
-              <AuthProvider>
+            <GenresContextProvider>
+              
               <Switch>
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/signup" component={SignUpPage} />
@@ -33,14 +34,15 @@ const App = () => {
                 <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
                 <Route exact path="/movies/watchlist" component={WatchlistMoviesPage} />
                 <Route exact path="/movies/top100" component={Top100MoviesPage} />
-                <Route exact path="/movies/:id" component={MoviePage} />
+                <Route path="/movies/:id" component={MoviePage} />
                 
                 <Route path="/reviews/:id" component={MovieReviewPage} />
                 <Redirect from="*" to="/" />
               </Switch>
-              </AuthProvider>
+              
             </GenresContextProvider>
           </MoviesContextProvider>
+          </AuthProvider>
         </div>
       </div>
     </BrowserRouter>

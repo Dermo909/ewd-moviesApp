@@ -12,7 +12,7 @@ const AddToFavoritesIcon = ({ movie }) => {
 
   const handleAddToFavorites = (e) => {
     e.preventDefault();
-    context.addToFavorites(movie.id);
+    context.addToFavorites(movie._id);
     setOpen(true);
   };
 

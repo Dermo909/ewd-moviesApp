@@ -12,7 +12,7 @@ const AddToPlaylistIcon = ({ movie }) => {
 
   const handleAddToPlaylist = (e) => {
     e.preventDefault();
-    context.addToPlaylist(movie.id);
+    context.addToPlaylist(movie._id);
     setOpen(true);
   };
 
