@@ -4,7 +4,6 @@ import { MoviesContext } from "../contexts/moviesContexts";
 import { AuthContext } from "../contexts/authContext";
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
-import { getUserFavourites } from './../api/movie-api';
 
 const FavoriteMoviesPage = (props) => {
   const context = useContext(MoviesContext);

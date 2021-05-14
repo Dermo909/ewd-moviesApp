@@ -4,17 +4,15 @@ import { MoviesContext } from "../contexts/moviesContexts";
 import RemoveFromWatchlist from "../components/cardIcons/removeFromWatchlist";
 
 
-const WatchlistMoviesPage = () => {
+const WatchlistMoviesPage = (props) => {
   const context = useContext(MoviesContext);
-  const { upcoming } = context;
-  const watchlistMovies = upcoming.filter((m) => m.playlist);
-
-  const isLoggedIn = localStorage.getItem('LoggedIn');
-
+  const { watchlistMovies } = context;
+  console.log('watchlistMoviePage, context: ', context);
+  
   const renderPage = () => {
-    if (isLoggedIn === 'true') {
-      return (
-        <PageTemplate
+
+    return (
+      <PageTemplate
         title="Watchlist"
         movies={watchlistMovies}
         action={(movie) => {
@@ -25,12 +23,8 @@ const WatchlistMoviesPage = () => {
           );
         }}
       />
-      );
-    } else {
-      return <h1>You need to be logged in to access this page</h1>;
-    }
+    );
   }
-
   return (
     <div>
       {renderPage()}

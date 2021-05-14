@@ -1,6 +1,10 @@
 import React, { useReducer, useEffect, useState, useContext } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
-import { getMovies, addMovieToFavourites, addMovieToWatchlist, getUserFavourites } from "../api/movie-api";
+import {  getMovies,
+          addMovieToFavourites,
+          addMovieToWatchlist,
+          getUserFavourites,
+          getUserWatchlist } from "../api/movie-api";
 import { convertReleaseDateToString, convertToPercentage } from '../utils';
 import { AuthContext } from './authContext';
 
@@ -11,6 +15,7 @@ const reducer = (state, action) => {
         favouriteMovies: action.payload.favouritesResult,
         upcoming: [...state.upcoming],
         movies: [...state.movies],
+        watchlistMovies: [...state.watchlistMovies],
       };
     case "remove-favorite":
       return {
@@ -19,12 +24,23 @@ const reducer = (state, action) => {
         ),
         upcoming: [...state.upcoming],
         favouriteMovies: [...state.favouriteMovies],
+        watchlistMovies: [...state.watchlistMovies],
+      };
+    case "load-watchlist-movies":
+      return {
+        watchlistMovies: action.payload.watchlistResult,
+        favouriteMovies: [...state.favouriteMovies],
+        upcoming: [...state.upcoming],
+        movies: [...state.movies],
       };
     case "remove-from-playlist":
       return {
         upcoming: state.upcoming.map((m) =>
           m.id === action.payload.movie.id ? { ...m, playlist: false } : m
         ),
+        favouriteMovies: action.payload.favouritesResult,
+        movies: [...state.movies],
+        watchlistMovies: [...state.watchlistMovies],
       };
     case "load-discover-movies":
       console.log('case load-discover-movies ', action.payload);
@@ -32,12 +48,14 @@ const reducer = (state, action) => {
         movies: action.payload.movies,
         upcoming: [...state.upcoming],
         favouriteMovies: [...state.favouriteMovies],
+        watchlistMovies: [...state.watchlistMovies],
       };
     case "load-upcoming-movies":
       return {
         upcoming: action.payload.movies,
         movies: [...state.movies],
         favouriteMovies: [...state.favouriteMovies],
+        watchlistMovies: [...state.watchlistMovies],
       };
     case "add-review":
       return {
@@ -48,6 +66,7 @@ const reducer = (state, action) => {
         ),
         upcoming: [...state.upcoming],
         favouriteMovies: [...state.favouriteMovies],
+        watchlistMovies: [...state.watchlistMovies],
       };
     default:
       return state;
@@ -57,7 +76,7 @@ const reducer = (state, action) => {
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], favouriteMovies: [] });
+  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], favouriteMovies: [], watchlistMovies: [] });
   const [authenticated, setAuthenticated] = useState(false);
 
   const auth = useContext(AuthContext);
@@ -83,12 +102,6 @@ const MoviesContextProvider = (props) => {
     getFavourites();
   }, []);
 
-  const getFavourites = async () => {
-      getUserFavourites(auth.userName).then(favouriteMovies => { 
-        dispatch({ type: "load-favourite-movies", payload: { favouriteMovies } });
-      });
-  };
-
   const addToPlaylist = (movieId) => {
     console.log('Add to watchlist: ', movieId);
 
@@ -107,6 +120,16 @@ const MoviesContextProvider = (props) => {
       payload: { movie: state.upcoming[index] },
     });
   };
+
+  useEffect(() => {
+    async function getWatchlist() {
+      const watchlistResult = await getUserWatchlist(auth.userName);
+      console.log('useEffect getUserWatchlist result: ', watchlistResult);
+
+      dispatch({ type: "load-watchlist-movies", payload: { watchlistResult } });
+    }
+    getWatchlist();
+  }, []);
 
   const removeFromFavorites = (movieId) => {
     const index = state.movies.map((m) => m.id).indexOf(movieId);
@@ -150,12 +173,12 @@ const MoviesContextProvider = (props) => {
         movies: state.movies,
         upcoming: state.upcoming,
         favouriteMovies: state.favouriteMovies,
+        watchlistMovies: state.watchlistMovies,
         addToFavorites: addToFavorites,
         removeFromFavorites: removeFromFavorites,
         addReview: addReview,
         addToPlaylist: addToPlaylist,
         removeFromPlaylist: removeFromPlaylist,
-        getFavourites: getFavourites,
         setAuthenticated
       }}
     >

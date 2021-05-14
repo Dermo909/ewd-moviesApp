@@ -112,3 +112,19 @@ export const addMovieToWatchlist = async (username, id) => {
 
   return res.json();
 };
+
+export const getUserWatchlist= async (username) => {
+    username = 'user1';
+    console.log('movie api, Getting watchlist');
+    const url = `/api/users/${username}/watchlist`;
+    console.log('url', url);
+  const res = await fetch(url, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.localStorage.getItem('token')
+      },
+      method: 'get'
+  })
+
+  return res.json();
+};
