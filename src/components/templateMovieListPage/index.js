@@ -17,8 +17,7 @@ function MovieListPageTemplate({ movies, title, action }) {
   const [genreFilter, setGenreFilter] = useState("0");
   const genre = Number(genreFilter);
 
-  console.log('movies.results in template movies list page: ', movies.results);
-
+  console.log('templatemovielistpage: movies', movies);
   let displayedMovies = movies
     .filter((m) => {
       return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;

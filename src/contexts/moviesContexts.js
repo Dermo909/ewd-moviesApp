@@ -1,17 +1,24 @@
 import React, { useReducer, useEffect, useState, useContext } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
-import { getMovies, addMovieToFavourites, addMovieToWatchlist } from "../api/movie-api";
+import { getMovies, addMovieToFavourites, addMovieToWatchlist, getUserFavourites } from "../api/movie-api";
 import { convertReleaseDateToString, convertToPercentage } from '../utils';
 import { AuthContext } from './authContext';
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "load-favourite-movies":
+      return {
+        favouriteMovies: action.payload.favouritesResult,
+        upcoming: [...state.upcoming],
+        movies: [...state.movies],
+      };
     case "remove-favorite":
       return {
         movies: state.movies.map((m) =>
           m.id === action.payload.movie.id ? { ...m, favorite: false } : m
         ),
         upcoming: [...state.upcoming],
+        favouriteMovies: [...state.favouriteMovies],
       };
     case "remove-from-playlist":
       return {
@@ -24,11 +31,13 @@ const reducer = (state, action) => {
       return {
         movies: action.payload.movies,
         upcoming: [...state.upcoming],
+        favouriteMovies: [...state.favouriteMovies],
       };
     case "load-upcoming-movies":
       return {
         upcoming: action.payload.movies,
         movies: [...state.movies],
+        favouriteMovies: [...state.favouriteMovies],
       };
     case "add-review":
       return {
@@ -38,6 +47,7 @@ const reducer = (state, action) => {
             : m
         ),
         upcoming: [...state.upcoming],
+        favouriteMovies: [...state.favouriteMovies],
       };
     default:
       return state;
@@ -47,7 +57,7 @@ const reducer = (state, action) => {
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [] });
+  const [state, dispatch] = useReducer(reducer, { movies: [], upcoming: [], favouriteMovies: [] });
   const [authenticated, setAuthenticated] = useState(false);
 
   const auth = useContext(AuthContext);
@@ -61,6 +71,22 @@ const MoviesContextProvider = (props) => {
       console.log('addToFavourites result: ', result);
     }
     addToFavourites();
+  };
+
+  useEffect(() => {
+    async function getFavourites() {
+      const favouritesResult = await getUserFavourites(auth.userName);
+      console.log('useEffect getUserFavourites result: ', favouritesResult);
+
+      dispatch({ type: "load-favourite-movies", payload: { favouritesResult } });
+    }
+    getFavourites();
+  }, []);
+
+  const getFavourites = async () => {
+      getUserFavourites(auth.userName).then(favouriteMovies => { 
+        dispatch({ type: "load-favourite-movies", payload: { favouriteMovies } });
+      });
   };
 
   const addToPlaylist = (movieId) => {
@@ -94,14 +120,6 @@ const MoviesContextProvider = (props) => {
     dispatch({ type: "add-review", payload: { movie, review } });
   };
 
-  // useEffect(() => {
-  //   getMovies().then((movies) => {
-  //     dispatch({ type: "load-discover-movies", payload: { movies } });
-  //   });
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   useEffect(() => {
     async function fetchMovies() {
       const moviesResult = await getMovies();
@@ -120,6 +138,7 @@ const MoviesContextProvider = (props) => {
 
   useEffect(() => {
     getUpcomingMovies().then((movies) => {
+      console.log('useEffect getUpcomingMovies result: ', movies);
       dispatch({ type: "load-upcoming-movies", payload: { movies } });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -130,11 +149,13 @@ const MoviesContextProvider = (props) => {
       value={{
         movies: state.movies,
         upcoming: state.upcoming,
+        favouriteMovies: state.favouriteMovies,
         addToFavorites: addToFavorites,
         removeFromFavorites: removeFromFavorites,
         addReview: addReview,
         addToPlaylist: addToPlaylist,
         removeFromPlaylist: removeFromPlaylist,
+        getFavourites: getFavourites,
         setAuthenticated
       }}
     >

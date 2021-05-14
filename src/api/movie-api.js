@@ -81,6 +81,22 @@ export const getMovie = async (id) => {
     return res.json();
 };
 
+export const getUserFavourites= async (username) => {
+    username = 'user1';
+    console.log('movie api, Getting favourites');
+    const url = `/api/users/${username}/favourites`;
+    console.log('url', url);
+  const res = await fetch(url, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.localStorage.getItem('token')
+      },
+      method: 'get'
+  })
+
+  return res.json();
+};
+
 export const addMovieToWatchlist = async (username, id) => {
     console.log('Adding to watchlist');
     const url = `/api/users/${username}/watchlist`;

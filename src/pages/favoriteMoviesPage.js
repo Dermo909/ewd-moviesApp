@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContexts";
+import { AuthContext } from "../contexts/authContext";
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
+import { getUserFavourites } from './../api/movie-api';
 
-const FavoriteMoviesPage = () => {
+const FavoriteMoviesPage = (props) => {
   const context = useContext(MoviesContext);
-  const { movies } = context;
-  const favoriteMovies = movies.filter((m) => m.favorite);
+  const { favouriteMovies } = context;
 
-  const isLoggedIn = localStorage.getItem('LoggedIn');
+  console.log('favouritesMoviePage, context: ', context);
 
   const renderPage = () => {
-    if (isLoggedIn === 'true') {
       return (
         <PageTemplate
-          title="Favorite Movies"
-          movies={favoriteMovies}
+          title="Favourite Movies"
+          movies={favouriteMovies}
           action={(movie) => {
             return (
               <>
@@ -27,9 +27,7 @@ const FavoriteMoviesPage = () => {
           }}
         />
       );
-    } else {
-      return <h1>You need to be logged in to access this page</h1>;
-    }
+
   }
 
   return (
