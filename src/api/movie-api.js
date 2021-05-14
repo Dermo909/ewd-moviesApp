@@ -82,7 +82,6 @@ export const getMovie = async (id) => {
 };
 
 export const getUserFavourites= async (username) => {
-    username = 'user1';
     console.log('movie api, Getting favourites');
     const url = `/api/users/${username}/favourites`;
     console.log('url', url);
@@ -114,7 +113,6 @@ export const addMovieToWatchlist = async (username, id) => {
 };
 
 export const getUserWatchlist= async (username) => {
-    username = 'user1';
     console.log('movie api, Getting watchlist');
     const url = `/api/users/${username}/watchlist`;
     console.log('url', url);
