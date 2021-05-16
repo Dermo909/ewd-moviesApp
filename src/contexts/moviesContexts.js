@@ -100,7 +100,17 @@ const MoviesContextProvider = (props) => {
       dispatch({ type: "load-favourite-movies", payload: { favouritesResult } });
     }
     getFavourites();
-  });
+  }, [auth.userName]);
+
+  useEffect(() => {
+    async function getWatchlist() {
+      const watchlistResult = await getUserWatchlist(auth.userName);
+      console.log('useEffect getUserWatchlist result: ', watchlistResult);
+
+      dispatch({ type: "load-watchlist-movies", payload: { watchlistResult } });
+    }
+    getWatchlist();
+  }, [auth.userName]);
 
   const addToPlaylist = (movieId) => {
     console.log('Add to watchlist: ', movieId);
@@ -120,16 +130,6 @@ const MoviesContextProvider = (props) => {
       payload: { movie: state.upcoming[index] },
     });
   };
-
-  useEffect(() => {
-    async function getWatchlist() {
-      const watchlistResult = await getUserWatchlist(auth.userName);
-      console.log('useEffect getUserWatchlist result: ', watchlistResult);
-
-      dispatch({ type: "load-watchlist-movies", payload: { watchlistResult } });
-    }
-    getWatchlist();
-  });
 
   const removeFromFavorites = (movieId) => {
     const index = state.movies.map((m) => m.id).indexOf(movieId);
