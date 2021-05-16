@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageTemplate from "../components/templateMoviePage";
 import ReviewForm from "../components/reviewForm";
 import useMovie from "../hooks/useMovie";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
+import { AuthContext } from "../contexts/authContext";
+import { Redirect } from "react-router-dom";
 
 const WriteReviewPage = ({
   location: {
@@ -11,6 +13,11 @@ const WriteReviewPage = ({
   },
 }) => {
   const [movie] = useMovie(movieId);
+
+  const auth = useContext(AuthContext);
+  if (auth.isAuthenticated === false) {
+    return <Redirect to={'/unathorised'} />;
+  }
 
   return (
     <>

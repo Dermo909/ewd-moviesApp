@@ -21,7 +21,7 @@ const AuthContextProvider = (props) => {
       setToken(result.token)
       setIsAuthenticated(true);
       setUserName(username);
-      localStorage.setItem("loggedInUser", username);
+      localStorage.setItem('userName', username);
     }
   };
 
@@ -32,6 +32,7 @@ const AuthContextProvider = (props) => {
   };
 
   const signout = () => {
+    localStorage.removeItem('userName');
     setTimeout(() => setIsAuthenticated(false), 100);
   }
 

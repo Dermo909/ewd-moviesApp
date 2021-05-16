@@ -28,7 +28,7 @@ const reducer = (state, action) => {
       };
     case "load-watchlist-movies":
       return {
-        watchlistMovies: action.payload.watchlistResult,
+        watchlistMovies: action.payload.watchlistResult.map(m => { m.watchlist = true; return m;}),
         favouriteMovies: [...state.favouriteMovies],
         upcoming: [...state.upcoming],
         movies: [...state.movies],

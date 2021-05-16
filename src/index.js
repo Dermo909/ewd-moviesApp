@@ -15,6 +15,8 @@ import WatchlistMoviesPage from './pages/watchlistMoviesPage';
 import Top100MoviesPage from './pages/top100MoviesPage';
 import LoginPage from './pages/login';
 import SignUpPage from './components/SignUp';
+import unathorised from './pages/unathorised';
+
 const App = () => {
   return (
     <BrowserRouter>
