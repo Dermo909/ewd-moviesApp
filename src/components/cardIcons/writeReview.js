@@ -8,7 +8,7 @@ const WriteReviewIcon = ({ movie }) => {
       to={{
         pathname: `/reviews/form`,
         state: {
-          movieId: movie.id,
+          movieId: movie._id,
         },
       }}
     >

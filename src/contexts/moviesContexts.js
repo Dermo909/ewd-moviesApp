@@ -4,7 +4,8 @@ import {  getMovies,
           addMovieToFavourites,
           addMovieToWatchlist,
           getUserFavourites,
-          getUserWatchlist } from "../api/movie-api";
+          getUserWatchlist,
+          addMovieReview } from "../api/movie-api";
 import { convertReleaseDateToString, convertToPercentage } from '../utils';
 import { AuthContext } from './authContext';
 
@@ -139,8 +140,15 @@ const MoviesContextProvider = (props) => {
     });
   };
 
+
   const addReview = (movie, review) => {
-    dispatch({ type: "add-review", payload: { movie, review } });
+    console.log('Adding review: ', review);
+
+    async function addReview() {
+      const result = await addMovieReview(auth.userName, review);
+      console.log('addMovieMovieReview result: ', result);
+    }
+    addReview();
   };
 
   useEffect(() => {

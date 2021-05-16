@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ShowFavoriteIcon(props) {
   console.log('props: ', props);
-  const isFavorite = props.favorite;
+  const isFavorite = props.favourite;
 
   if (isFavorite) {
     console.log('Is favorite');

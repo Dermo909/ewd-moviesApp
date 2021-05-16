@@ -70,11 +70,10 @@ const ReviewForm = ({ movie, history }) => {
   const [rating, setRating] = useState(3);
   const [open, setOpen] = React.useState(false);
 
-  const isLoggedIn = localStorage.getItem('LoggedIn');
-  const userName = localStorage.getItem('UserName');
+  const userName = localStorage.getItem('userName');
+  console.log('review form');
 
   const renderPage = () => {
-    if (isLoggedIn === 'true') {
       return (
         <Box component="div" className={classes.root}>
           <Typography component="h2" variant="h3">
@@ -172,9 +171,6 @@ const ReviewForm = ({ movie, history }) => {
           </form>
         </Box>
       );
-    } else {
-      return <h1>You need to be logged in to access this page</h1>;
-    }
   }
   const handleSnackClose = (event) => {
     setOpen(false);
@@ -186,12 +182,8 @@ const ReviewForm = ({ movie, history }) => {
   };
 
   const onSubmit = (review) => {
-    review.movieId = movie.id;
+    review.movieId = movie._id;
     review.rating = rating;
-
-    // Saving to local storage to display users rating on movie also
-    localStorage.setItem(`UserRating${movie.id}`, convertUserRatingToPercentage(rating));
-    localStorage.setItem(`Review${movie.id}`, review.content);
     context.addReview(movie, review);
     setOpen(true);   // NEW
   };

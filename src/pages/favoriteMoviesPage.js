@@ -14,7 +14,6 @@ const FavoriteMoviesPage = (props) => {
     return <Redirect to={'/unathorised'} />;
   }
 
-  console.log('favouritesMoviePage, context: ', context);
 
   const renderPage = () => {
       return (
