@@ -10,10 +10,10 @@ const MovieReviewPage = ({
     state: { movie, review },
   },
 }) => {
-  const auth = useContext(AuthContext);
-  if (auth.isAuthenticated === false) {
-    return <Redirect to={'/unathorised'} />;
-  }
+  // const auth = useContext(AuthContext);
+  // if (auth.isAuthenticated === false) {
+  //   return <Redirect to={'/unathorised'} />;
+  // }
   return (
     <PageTemplate movie={movie}>
       <MovieReview review={review} />

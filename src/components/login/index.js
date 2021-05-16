@@ -87,7 +87,6 @@ const LoginForm = props => {
             label="password"
             name="password"
             type="password"
-            autoFocus
             inputRef={register({ required: "Password required" })}
             onBlur={e => {setPassword(e.target.value)}}
           />

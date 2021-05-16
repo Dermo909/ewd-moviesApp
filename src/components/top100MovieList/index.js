@@ -9,7 +9,9 @@ function Top100MoviesPageTemplate({ movies, title }) {
   return (
     <div>
         <Header title={title} />
+        <ol>
         <MovieList movies={movies}></MovieList>
+        </ol>
     </div>
   );
 }

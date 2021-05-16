@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { AuthContext } from "../../contexts/authContext";
@@ -28,6 +28,7 @@ const SiteHeader = ( { history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const auth = useContext(AuthContext);
+  console.log('site header auth: ', auth);
 
   const menuOptions = [
     { label: "Discover", path: "/" },
@@ -35,10 +36,17 @@ const SiteHeader = ( { history }) => {
     { label: "Favourites", path: "/movies/favorites" },
     { label: "Watchlist", path: "/movies/watchlist" },
     { label: "Top Rated Movies", path: "/movies/top100" },
+    { label: "Sign out", path: "/login" },
   ];
 
-  const handleMenuSelect = (pageURL) => {
-    history.push(pageURL);
+  const handleMenuSelect = async (option) => {
+    if (option.label === "Sign out") {
+      await auth.signout();
+      console.log('option.path: ', option.path);
+      history.push(option.path);
+    } else {
+      history.push(option.path);
+    }
   };
 
   const handleMenu = (event) => {
@@ -91,7 +99,7 @@ const SiteHeader = ( { history }) => {
               </>
             ) : (
               <>
-                {menuOptions.map((opt) => (
+                {/* {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}
                     color="inherit"
@@ -99,7 +107,17 @@ const SiteHeader = ( { history }) => {
                   >
                     {opt.label}
                   </Button>
-                ))}
+                ))} */}
+                {auth.isAuthenticated ? menuOptions.map((opt) => (
+                  <Button
+                    key={opt.label}
+                    color="inherit"
+                    onClick={() => handleMenuSelect(opt)}
+                  >
+                    {opt.label}
+                  </Button>)
+                )  : (<Link to={`/login`} style={{ textDecoration: 'none' }}>Sign In</Link>)
+                }
               </>
             )}
         </Toolbar>

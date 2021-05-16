@@ -8,10 +8,10 @@ import { Redirect } from "react-router-dom";
 const UpcomingMoviesPage = (props) => {
   const context = useContext(MoviesContext);
   const { upcoming } = context;
-  const auth = useContext(AuthContext);
-  if (auth.isAuthenticated === false) {
-    return <Redirect to={'/unathorised'} />;
-  }
+  // const auth = useContext(AuthContext);
+  // if (auth.isAuthenticated === false) {
+  //   return <Redirect to={'/unathorised'} />;
+  // }
   return (
     <PageTemplate
       title="Upcoming Movies"

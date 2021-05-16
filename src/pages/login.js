@@ -4,7 +4,7 @@ import React from "react";
 
 
 const LoginPage = () => {
-
+    console.log('logging in');
 
     return (
         <>

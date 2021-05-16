@@ -9,9 +9,9 @@ const Top100MoviesPage = () => {
     const auth = useContext(AuthContext);
 
     useEffect(() => {
-        if (auth.isAuthenticated === false) {
-            return <Redirect to={'/unathorised'} />;
-          }
+        // if (auth.isAuthenticated === false) {
+        //     return <Redirect to={'/unathorised'} />;
+        //   }
         getTop100Movies().then(movies => {
             setMovies(movies);
         });

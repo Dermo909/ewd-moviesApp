@@ -15,10 +15,10 @@ const MovieDetailsPage = ({
 }) => {
   console.log('movieDetailsPage, id: ', id);
   const [movie] = useMovie(id);
-  const auth = useContext(AuthContext);
-  if (auth.isAuthenticated === false) {
-    return <Redirect to={'/unathorised'} />;
-  }
+  // const auth = useContext(AuthContext);
+  // if (auth.isAuthenticated === false) {
+  //   return <Redirect to={'/unathorised'} />;
+  // }
   return (
     <>
       {movie ? (
