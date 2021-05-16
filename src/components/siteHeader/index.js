@@ -42,7 +42,6 @@ const SiteHeader = ( { history }) => {
   const handleMenuSelect = async (option) => {
     if (option.label === "Sign out") {
       await auth.signout();
-      console.log('option.path: ', option.path);
       history.push(option.path);
     } else {
       history.push(option.path);

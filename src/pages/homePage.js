@@ -10,7 +10,6 @@ const HomePage = (props) => {
   const { movies  } = context;
   const auth = useContext(AuthContext);
   if (auth.isAuthenticated === false) {
-    //return <Redirect to={'/unathorised'} />;
     props.history.push('/login');
   }
   console.log('homepage movies:', movies);

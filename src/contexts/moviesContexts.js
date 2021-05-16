@@ -100,7 +100,7 @@ const MoviesContextProvider = (props) => {
       dispatch({ type: "load-favourite-movies", payload: { favouritesResult } });
     }
     getFavourites();
-  }, []);
+  });
 
   const addToPlaylist = (movieId) => {
     console.log('Add to watchlist: ', movieId);
@@ -129,7 +129,7 @@ const MoviesContextProvider = (props) => {
       dispatch({ type: "load-watchlist-movies", payload: { watchlistResult } });
     }
     getWatchlist();
-  }, []);
+  });
 
   const removeFromFavorites = (movieId) => {
     const index = state.movies.map((m) => m.id).indexOf(movieId);
