@@ -33,13 +33,15 @@ export const getMovies = async () => {
             }
     }
     )
-
-    return res.json();
+    switch(res.status) {
+        case 200: return res.json();
+        default: window.location.href = '/oops'; break;
+    }
 };
 
 export const getMovie = async (id) => {
-    console.log('Getting movie id: ', id);
     const url = `/api/movies/${id}`;
+
     const res = await fetch(
         url, {
             headers: {
@@ -47,9 +49,26 @@ export const getMovie = async (id) => {
             }
     }
     )
+    switch(res.status) {
+        case 200: return res.json();
+        default: window.location.href = '/oops'; break;
+    }
+  };
 
-    return res.json();
+  export const getMovieReviews = async (id) => {
+    const url = `/api/reviews/${id}`;
 
+    const res = await fetch(
+        url, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
+    }
+    )
+    switch(res.status) {
+        case 200: return res.json();
+        default: window.location.href = '/oops'; break;
+    }
   };
 
   export const getCastAndCrew = async (id) => {
@@ -81,6 +100,7 @@ export const getMovie = async (id) => {
 
     return res.json();
 };
+
 export const addMovieReview = async (username, review) => {
     console.log('Adding to favourites');
     const url = `/api/movies/${username}/reviews`;

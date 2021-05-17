@@ -15,6 +15,7 @@ import WatchlistMoviesPage from './pages/watchlistMoviesPage';
 import Top100MoviesPage from './pages/top100MoviesPage';
 import LoginPage from './pages/login';
 import SignUpPage from './components/SignUp';
+import Oops from "./pages/oops";
 
 const App = () => {
   return (
@@ -37,9 +38,9 @@ const App = () => {
                 <Route exact path="/movies/watchlist" component={WatchlistMoviesPage} />
                 <Route exact path="/movies/top100" component={Top100MoviesPage} />
                 <Route path="/movies/:id" component={MoviePage} />
-                
+                <Route path="/oops" component={Oops} />
                 <Route path="/reviews/:id" component={MovieReviewPage} />
-                <Redirect from="*" to="/" />
+                <Redirect from="*" to="/oops" />
               </Switch>
               
             </GenresContextProvider>
