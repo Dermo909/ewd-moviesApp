@@ -25,3 +25,7 @@ export function formatMovieRuntime(runtime) {
   const minutes = runtime % 60;
   return hours + 'h' + minutes + 'm';
 }
+
+// App constants
+export const OK = 1;
+export const NOTOK = 0;

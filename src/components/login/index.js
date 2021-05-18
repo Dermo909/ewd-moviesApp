@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { AuthContext } from './../../contexts/authContext';
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import { NOTOK } from '../../utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,9 +45,14 @@ const LoginForm = props => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [loginMessage, setLoginMessage] = useState("");
 
-    const onSubmit = (e) => {
-      context.authenticate(userName, password);
+    const onSubmit = async (e) => {
+      const r = await context.authenticate(userName, password);
+
+      if(r === NOTOK) {
+        setLoginMessage('Invalid credentials, try again');
+      }
     };
 
     const { from } = props.location.state || { from: { pathname: "/" } };
@@ -60,7 +66,7 @@ const LoginForm = props => {
         <Typography component="h2" variant="h3">
           Please log in
         </Typography>
-
+        {loginMessage}
         <form
           className={classes.root}
           onSubmit={handleSubmit(onSubmit)}

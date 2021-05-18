@@ -10,6 +10,7 @@ export const login = async (username, password) => {
     });
     console.log('login res: ', res);
     console.log('login res.json: ', res.json);
+
     return res.json();
 };
 
@@ -33,10 +34,12 @@ export const getMovies = async () => {
             }
     }
     )
-    switch(res.status) {
-        case 200: return res.json();
-        default: window.location.href = '/oops'; break;
-    }
+    // switch(res.status) {
+    //     case 200: return res.json();
+    //     default: window.location.href = '/oops'; break;
+    // }
+
+    return res.json();
 };
 
 export const getMovie = async (id) => {

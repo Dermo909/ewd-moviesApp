@@ -1,5 +1,7 @@
+import { NetworkLockedTwoTone } from "@material-ui/icons";
 import React, { useState, createContext } from "react";
 import { login, signup } from "../api/movie-api";
+import { OK, NOTOK } from '../utils';
 
 export const AuthContext = createContext(null);
 
@@ -22,6 +24,9 @@ const AuthContextProvider = (props) => {
       setIsAuthenticated(true);
       setUserName(username);
       localStorage.setItem('userName', username);
+      return OK;
+    } else {
+      return NOTOK;
     }
   };
 

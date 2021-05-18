@@ -28,7 +28,8 @@ const SiteHeader = ( { history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const auth = useContext(AuthContext);
-  console.log('site header auth: ', auth);
+  const userName = localStorage.getItem('userName');
+  const signOutText = `Sign Out ${userName}`;
 
   const menuOptions = [
     { label: "Discover", path: "/" },
@@ -36,7 +37,7 @@ const SiteHeader = ( { history }) => {
     { label: "Favourites", path: "/movies/favorites" },
     { label: "Watchlist", path: "/movies/watchlist" },
     { label: "Top Rated Movies", path: "/movies/top100" },
-    { label: "Sign out", path: "/login" },
+    { label: "Sign Out", path: "/login" },
   ];
 
   const handleMenuSelect = async (option) => {
