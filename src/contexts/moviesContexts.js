@@ -175,6 +175,13 @@ const MoviesContextProvider = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getFavouriteMovies = async () => {
+    const favouritesResult = await getUserFavourites(auth.userName);
+    console.log('getUserFavourites result: ', favouritesResult);
+
+    dispatch({ type: "load-favourite-movies", payload: { favouritesResult } });
+  }
+
   return (
     <MoviesContext.Provider
       value={{
@@ -187,6 +194,7 @@ const MoviesContextProvider = (props) => {
         addReview: addReview,
         addToPlaylist: addToPlaylist,
         removeFromPlaylist: removeFromPlaylist,
+        getFavouriteMovies: getFavouriteMovies,
         setAuthenticated
       }}
     >
