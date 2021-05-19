@@ -69,7 +69,7 @@ export const getMovie = async (id) => {
     }
     )
     switch(res.status) {
-        case 200: return res.json();
+        case 200: console.log('Reveived review back'); return res.json();
         default: window.location.href = '/oops'; break;
     }
   };

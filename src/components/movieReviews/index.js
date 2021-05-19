@@ -22,19 +22,30 @@ export default function MovieReviews({ movie }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(movie._id).then((reviews) => {
+    getMovieReviews(movie._id).then((r) => {
       // Did the user review this?
-      const userReview = localStorage.getItem(`Review${movie.id}`);
-      const userName = localStorage.getItem('UserName');
-      if(userReview !== null) {
-        const review = {
-          author: userName,
-          content: userReview
-        }; 
-        reviews.push(review);
+      // const userReview = localStorage.getItem(`Review${movie.id}`);
+      // const userName = localStorage.getItem('UserName');
+      if(r !== null) {
+        console.log('user review is not null: ', r);
+        for(let rev in r){
+          console.log('in loop r: ', r);
+          // const review = {
+          //   author: r[rev].author,
+          //   content: r[rev].content
+          // };
+          // reviews.push(review);
+        }
+
+        // console.log('getMovieReviews reviews: ', r);
+        // //reviews.push(review);
+        // console.log('reviews list: ', r);
+        
+        console.log('reviews: ', reviews);
       }
+      //setReviews(reviews);
+      setReviews(r);
       
-      setReviews(reviews);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -51,13 +62,13 @@ export default function MovieReviews({ movie }) {
         </TableHead>
         <TableBody>
           {reviews.map((r) => (
-            <TableRow key={r.id}>
+            <TableRow key={r._id}>
               <TableCell component="th" scope="row">
                 {r.author}
               </TableCell>
               <TableCell >{excerpt(r.content)}</TableCell>
               <TableCell >
-                <Link
+                {/* <Link
                   to={{
                     pathname: `/reviews/${r.id}`,
                     state: {
@@ -67,7 +78,7 @@ export default function MovieReviews({ movie }) {
                   }}
                 >
                   Full Review
-                </Link>
+                </Link> */}
               </TableCell>
             </TableRow>
           ))}
