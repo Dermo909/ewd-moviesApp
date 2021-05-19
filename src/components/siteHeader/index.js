@@ -27,12 +27,18 @@ const SiteHeader = ( { history }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+  const isLoggedIn = localStorage.getItem('LoggedIn');
+  const userName = localStorage.getItem('UserName');
+  const loginString = isLoggedIn === 'true' ? `Logout ${userName}` : 'Login';
+  const loginMenuOption = { label: loginString, path: "/login" };
+
   const menuOptions = [
     { label: "Discover", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Watchlist", path: "/movies/watchlist" },
     { label: "Top Rated Movies", path: "/movies/top100" },
+    loginMenuOption
   ];
 
   const handleMenuSelect = (pageURL) => {

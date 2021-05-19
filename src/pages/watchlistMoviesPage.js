@@ -52,7 +52,7 @@ const WatchlistMoviesPage = () => {
       return (
         <div className={classes.root}>
         <Typography component="h2" variant="h3">
-        You need to be logged in to access this page
+        You need to be logged in to view watchlist
       </Typography>
       <div><Link to={`/login`}>Log in</Link>
       </div></div>
