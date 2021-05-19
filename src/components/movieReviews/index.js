@@ -22,7 +22,7 @@ export default function MovieReviews({ movie }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getMovieReviews(movie.id).then((reviews) => {
+    getMovieReviews(movie._id).then((reviews) => {
       // Did the user review this?
       const userReview = localStorage.getItem(`Review${movie.id}`);
       const userName = localStorage.getItem('UserName');
