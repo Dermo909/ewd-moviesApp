@@ -12,6 +12,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import Alert from '@material-ui/lab/Alert';
 import { convertUserRatingToPercentage } from '../../utils';
+import { Link } from "react-router-dom";
 
 const ratings = [
   {
@@ -173,7 +174,15 @@ const ReviewForm = ({ movie, history }) => {
         </Box>
       );
     } else {
-      return <h1>You need to be logged in to access this page</h1>;
+      //return "<div><h1>You need to be logged in to access this page</h1><br><Link to={`/login`}>Log in</div>";
+      return (
+        <div className={classes.root}>
+        <Typography component="h2" variant="h3">
+        You need to be logged in to access this page
+      </Typography>
+      <div><Link to={`/login`}>Log in</Link>
+      </div></div>
+      );
     }
   }
   const handleSnackClose = (event) => {
