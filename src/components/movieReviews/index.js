@@ -43,7 +43,7 @@ export default function MovieReviews({ movie }) {
         
         console.log('reviews: ', reviews);
       }
-      //setReviews(reviews);
+
       setReviews(r);
       
     });
