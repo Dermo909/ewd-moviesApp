@@ -14,6 +14,7 @@ import WatchlistMoviesPage from './pages/watchlistMoviesPage';
 import Top100MoviesPage from './pages/top100MoviesPage';
 import LoginPage from './pages/login';
 
+// Demo version
 const App = () => {
   return (
     <BrowserRouter>
