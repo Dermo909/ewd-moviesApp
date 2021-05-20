@@ -167,7 +167,10 @@ export function convertUserRatingToPercentage(num) {
 ```
 
 ## Extra independent learning
-Besides some React tags like Box/Link etc there are two main additions which required some investigation to implement correctly. A spinner will be shown on screen after selecting a movie to view. This is shown using the following code(Loader tag). The spinner is displayed while the movie is being fetched and is null. 
+Besides some React tags like Box/Link etc there are two main additions which required some investigation to implement correctly. 
+
+### Spinner 
+A spinner will be shown on screen after selecting a movie to view. This is shown using the following code(Loader tag). The spinner is displayed while the movie is being fetched and is null. 
 ```bat
   return (
     <>
@@ -193,39 +196,76 @@ Besides some React tags like Box/Link etc there are two main additions which req
 The spinner is imported like so:
 ```bat
 import Loader from "react-loader-spinner";
+```
+
+### Gridlist
+A gridlist was also implemented on the movie page which allows the user to scroll through actors photos. Each item in the gridlist is clickable to display a full size version of the actors photo. This feature required some experimentation to get the photos displaying correctly with the correct image size beign gotten from a seperate movie databae endpoint:
 ```bat
+        <GridList className={classes.gridList} cols={9}>
+        {movie.castAndCrew.sortedActors.map((actor) => (
+          <GridListTile key={actor.original_name}>
+            <a href={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}>
+            <img src={`https://image.tmdb.org/t/p/w154/${actor.profile_path}`} alt={actor.profile_path} />
+            </a>
+            <GridListTileBar
+              title={actor.original_name}
+              classes={{
+                root: classes.titleBar,
+              }}
+            />
+          </GridListTile>
+        ))}
+      </GridList>
+```
+
+### Login/protecting routes
+As there was no database in this part of the assignment a workaround needed to be achieved to mimic a user needing to log in before seeing certain pages or being allowed to add a review.
+
+Getting a user to log in using a text entry field and then storing the user name with a logged in flag was deemed a suitable method of mimicing the login process. Only some routes were protected so conditional rendering was used to either display the page or an error message. This is detailed under the security heading above.
+
 
 ## Features
-1. Login
-  * Added authcontext
-  * Verifying user is logged in before showing movies
+The following list is a working list/TODO as I worked through the assignment
 
-2. Movies
-  * Getting movies from api
-  * seeding DB with cast and crew data
-  * Getting cast and crew from api
+1. Movie
+  * Country of origin
+  * Remove more info link
+  * Add to favourites and watchlist from movie page
+  * Add review from movie
+  * Snackbar when added to favorites on movie page
+  * Clickable pictures for cast	
+  * Make movie image clickable on discover and upcoming
+  * Add certificate info to movies
+  * Display only 1 image on left
+  * Movie length
+  * Year of release beside movie title
+  * List of crew
+  * Main actors under movie description 
+  * Date of release
 
-3. Favourites
-  * Restrict to logged in folks
-  * Add movie to favourites
-  * Show favourites
+2. Reviews:
+  * Restrict logged in users to add reviews
+  * Auto complete logged in users name if logged in
+  * Add review to bottom of movie details page with reviewer details
+  * Limit review to however many characters
+  * Full review link
+  * Add review button to movie details page
+  * Show user rating on page in a green chip if entered
+  * show users review in the full review drawer
 	
-4. Watchlist	
-  * Restrict to logged in folks
-  * Add movie to watchlist
-  * Show watchlist 
+3. Watchlist:
+  * View watchlist
+  * Only showing if logged in
 
-5. Top rated movies
-  * restrict to logged in folks
-	
-6. Error handling
-  * oops/unathorised page
+4. Favourites
+  * Only showing if logged in
 
-7. Reviews
-  * Add review model
-  * Add review(save to DB)
-  * Show review on movie page
-	
-8. Header
-  * Only show header menu when logged in
-  * Show logout link when logged in 
+5. Top 100:
+  * Display as a clickable list with links
+  * Add rating to list entries
+
+6. Login:
+  * Login for user
+
+7. Spinner
+  * While waiting for movie details
